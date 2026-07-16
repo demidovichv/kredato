@@ -1,0 +1,116 @@
+/* kredato-pdf.css — единый дизайн PDF-магнитов Kredato
+   Концепт: светлое тело + тёмные бренд-блоки (гибрид).
+   Цвета: фон тёмный #0E1A2B, акцент #2f6ae8 (как на сайте).
+   Шрифты: Manrope (заголовки) + Inter (тело). Fallback Arial. */
+
+@page {
+  size: A4;
+  margin: 18mm 18mm 20mm 18mm;
+  @bottom-center { content: counter(page) " / " counter(pages); font-size: 9pt; color: #5A6678; }
+  @bottom-left   { content: "© Kredato 2026 · kredato.com"; font-size: 8pt; color: #5A6678; }
+  @bottom-right  { content: "Не финансовая рекомендация"; font-size: 8pt; color: #5A6678; }
+}
+
+:root {
+  --k-dark: #0E1A2B;
+  --k-dark2: #12233A;
+  --k-accent: #2f6ae8;
+  --k-accent-l: #5b8def;
+  --k-text: #1A2230;
+  --k-muted: #5A6678;
+  --k-bg: #FFFFFF;
+  --k-bg-soft: #F7F9FC;
+  --k-line: #E3E8F0;
+  --k-green: #22A06B;
+  --k-orange-bg: #FBE9E7;
+  --k-orange-tx: #8A3B12;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Inter", Arial, sans-serif;
+  color: var(--k-text);
+  font-size: 11pt;
+  line-height: 1.6;
+  margin: 0;
+}
+
+h1, h2, h3 { font-family: "Manrope", "Inter", Arial, sans-serif; color: var(--k-dark); font-weight: 700; }
+h1 { font-size: 26pt; line-height: 1.15; margin: 0 0 8pt; }
+h2 { font-size: 16pt; margin: 18pt 0 8pt; }
+h3 { font-size: 12.5pt; margin: 12pt 0 4pt; color: var(--k-accent); }
+p  { margin: 0 0 8pt; }
+a  { color: var(--k-accent); text-decoration: none; }
+small, .muted { color: var(--k-muted); font-size: 9.5pt; }
+
+/* Левый фирменный «шов» */
+body { border-left: 6mm solid var(--k-accent); padding-left: 4mm; }
+
+/* Обложка (титул) */
+.cover {
+  background: var(--k-dark);
+  color: #fff;
+  margin: -18mm -22mm 14pt -22mm;  /* выход за поля страницы */
+  padding: 40pt 24mm 32pt 24mm;
+  border-top: 10mm solid var(--k-accent);
+}
+.cover .logo { font-family: "Manrope"; font-weight: 700; font-size: 22pt; color: #fff; }
+.cover .logo b { color: var(--k-accent-l); }
+.cover h1 { color: #fff; margin-top: 18pt; }
+.cover .lead { color: #9FB0C8; font-size: 12pt; max-width: 130mm; }
+.cover .chip {
+  display: inline-block; margin-top: 14pt; padding: 4pt 12pt; border-radius: 20pt;
+  font-size: 9pt; font-weight: 700; color: #fff;
+}
+.chip-fin    { background: var(--k-accent); }
+.chip-strah  { background: var(--k-green); }
+.chip-earn   { background: #F2A33C; }
+.cover .free { margin-top: 18pt; font-size: 9pt; color: #9FB0C8; }
+
+/* Аннотация */
+.anno { background: var(--k-bg-soft); border: 1px solid var(--k-line); border-radius: 8pt; padding: 12pt 14pt; margin: 12pt 0 16pt; }
+
+/* Чек-лист */
+.checklist { list-style: none; padding: 0; margin: 8pt 0; }
+.checklist li {
+  position: relative; padding: 6pt 0 6pt 26pt; border-bottom: 1px solid var(--k-line);
+}
+.checklist li::before {
+  content: ""; position: absolute; left: 0; top: 8pt; width: 15pt; height: 15pt;
+  border: 1.5pt solid var(--k-accent); border-radius: 3pt;
+}
+.checklist li b { color: var(--k-dark); }
+
+/* Таблица сравнения */
+table.cmp { width: 100%; border-collapse: collapse; margin: 10pt 0; font-size: 10pt; }
+table.cmp th { background: var(--k-dark2); color: #fff; text-align: left; padding: 7pt 9pt; font-family: "Manrope"; }
+table.cmp td { padding: 6pt 9pt; border-bottom: 1px solid var(--k-line); }
+table.cmp tr:nth-child(even) td { background: var(--k-bg-soft); }
+
+/* Плашка-пример расчёта */
+.calc { background: #EEF3FE; border-left: 4pt solid var(--k-accent); border-radius: 6pt; padding: 10pt 12pt; margin: 10pt 0; font-family: "Inter"; }
+.calc b { color: var(--k-accent); }
+
+/* Upsell-блок: кликабельная ссылка на раздел + QR (вместо CTA-подписки) */
+.upsell {
+  display: flex; align-items: center; gap: 14pt;
+  background: var(--k-bg-soft); border: 1px solid var(--k-line);
+  border-radius: 10pt; padding: 14pt 16pt; margin: 16pt 0 12pt;
+}
+.upsell .qr { width: 64pt; height: 64pt; flex: 0 0 auto; }
+.upsell .qr img { width: 100%; height: 100%; display: block; }
+.upsell .utxt { font-size: 10.5pt; line-height: 1.5; }
+.upsell .utxt b { color: var(--k-dark); }
+.upsell a { color: var(--k-accent); font-weight: 700; text-decoration: none; }
+.upsell a::after { content: " →"; }
+
+
+/* Дисклеймер */
+.disclaimer {
+  background: var(--k-orange-bg); color: var(--k-orange-tx); font-size: 8.5pt;
+  border-radius: 6pt; padding: 8pt 10pt; margin-top: 14pt; line-height: 1.45;
+}
+
+/* Шаблон-поля (для резюме/РКО) */
+.fill { border-bottom: 1pt dashed var(--k-muted); display: inline-block; min-width: 80pt; height: 14pt; }

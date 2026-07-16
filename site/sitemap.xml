@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- ХАБ -->
+  <url><loc>https://kredato.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://kredato.com/fin/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://kredato.com/strah/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://kredato.com/earning/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://kredato.com/of/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- FIN -->
+  <url><loc>https://kredato.com/fin/ipoteka/semeynaya-2026/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/ipoteka/refinansirovanie/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/karty/tbank-black-vs-obichnaya/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/karty/kreditnaya-rassrochka-2026/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/karty/debetovaya-keshbek/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/karty/mfo-plohaya-ki/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/vkldy/vysokiy-procent-2026/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/vkldy/schet-vs-vklad/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/rko/dlya-ip-2026/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/fin/sng/zaymy-kazahstan-online/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- STRAH -->
+  <url><loc>https://kredato.com/strah/ipotechnoe/obyazatelnoe/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/strah/ipotechnoe/novye-standarty-2026/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/strah/kasko/raschet-online/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/strah/kasko/mini-kasko/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/strah/kasko/na-bu-avto/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/strah/osago/deshevo-online-2026/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/strah/osago/novichek-molodoy-voditel/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/strah/osago/dlya-taksi/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- EARNING -->
+  <url><loc>https://kredato.com/earning/kursy-neyrosetey-marketing/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/earning/ii-dlya-malogo-biznesa/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/earning/frilans-mamam-v-dekrete/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/earning/podrabotka-telegram-bez-opyta/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- JOBS -->
+  <url><loc>https://kredato.com/jobs/podrabotka-vecherom-2026/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kredato.com/jobs/gde-nayti-zakazy-kwork-fl/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- LEARN -->
+  <url><loc>https://kredato.com/learn/cheklist-frilansera-novichka/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kredato.com/learn/golos-zarabotok-gayd/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- OF (локальная витрина, КИПЕР SEO — индексируем, но PDF-магниты под запретом) -->
+  <url><loc>https://kredato.com/of/psb-cashback/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kredato.com/of/mts-skidka/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kredato.com/of/mts-money/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kredato.com/of/mikroklad/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kredato.com/of/akbars-islamic/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kredato.com/of/dobrozaim/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+</urlset>

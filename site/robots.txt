@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# PDF-магниты раздаются ТОЛЬКО после double opt-in (приходят на email),
+# прямые ссылки запрещены (решение 2026-07-15).
+Disallow: /assets/pdf/
+
+# Служебное
+Disallow: /go/
+
+Sitemap: https://kredato.com/sitemap.xml

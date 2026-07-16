@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kredato — финансовый гид и рассылка для RU/СНГ</title>
+<meta name="description" content="Kredato: честные разборы банковских продуктов, страхования и заработка. Бесплатные гайды + полезная рассылка по email (double opt-in, по 152-ФЗ).">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="canonical" href="https://kredato.com/">
+<meta name="keywords" content="финансовая грамотность, банки, страхование, заработок, рассылка Kredato">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="logo">Kred<span>ato</span></div>
+    <button class="nav-toggle" aria-label="Меню" aria-expanded="false">☰</button>
+    <nav>
+      <a href="index.html" class="active">Хаб</a>
+      <a href="fin/">Финансы</a>
+      <a href="strah/">Страхование</a>
+      <a href="earning/">Заработок</a>
+      <a href="privacy.html">Политика ПДн</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero с действием в первом экране (В2: .hero.has-tool) -->
+<section class="hero has-tool">
+  <div class="wrap">
+    <span class="tag green">Финансовая грамотность без «халявы»</span>
+    <h1>Kredato — разбираемся в деньгах вместе</h1>
+    <p class="lead">Банковские продукты, страхование и заработок для RU/СНГ. Честные сравнения, калькуляторы и разборы условий — без спама, только с вашего согласия.</p>
+    <div class="hero-actions">
+      <a href="#subscribe" class="btn lg">Подписаться на гайды</a>
+      <a href="#verticals" class="btn ghost">Выбрать направление</a>
+    </div>
+  </div>
+  <!-- Заглушка-калькулятор справа (действие в 1 экране, В2) -->
+  <div class="wrap">
+    <div class="calculator" aria-label="Калькулятор (демо)">
+      <h3>Калькулятор вклада</h3>
+      <div class="field">
+        <label for="calc-amt">Сумма</label>
+        <input type="number" id="calc-amt" value="300000" min="1000" step="1000">
+      </div>
+      <div class="field">
+        <label for="calc-rate">Ставка, %</label>
+        <input type="number" id="calc-rate" value="13.3" min="0" step="0.1">
+      </div>
+      <div class="field">
+        <label for="calc-years">Срок, лет</label>
+        <input type="number" id="calc-years" value="1" min="1" max="5" step="1">
+      </div>
+      <div class="result">Примерный доход на 09.07.2026: расчёт под ключом в гайде. Цифры — иллюстрация, не обещание доходности.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок доверия: 3 карточки (В3) -->
+<section>
+  <div class="wrap">
+    <div class="trust-strip">
+      <div class="t"><b>0 ₽</b><span>за подписку — рассылка бесплатна</span></div>
+      <div class="t"><b>double opt-in</b><span>подтверждение email перед письмами</span></div>
+      <div class="t"><b>152-ФЗ</b><span>честно работаем с персональными данными</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Живые ставки ЦБ (В4: .rates-ticker) -->
+<section>
+  <div class="wrap">
+    <div class="rates-ticker">
+      <h3>Ставки на 09.07.2026 (по открытым данным)</h3>
+      <div class="tabs" role="tablist">
+        <button type="button" data-period="6m" aria-selected="true">6 месяцев</button>
+        <button type="button" data-period="1y" aria-selected="false">1 год</button>
+        <button type="button" data-period="3y" aria-selected="false">3 года</button>
+      </div>
+      <div class="panel" data-panel="6m">
+        <div class="row"><span>Вклады</span><span class="val">12,5–13,5%</span></div>
+        <div class="row"><span>Ипотека</span><span class="val">11,9–17%</span></div>
+        <div class="row"><span>Кредиты</span><span class="val">25,8–31,8%</span></div>
+      </div>
+      <div class="panel hidden" data-panel="1y">
+        <div class="row"><span>Вклады</span><span class="val">12,0–13,2%</span></div>
+        <div class="row"><span>Ипотека</span><span class="val">11,5–16,5%</span></div>
+        <div class="row"><span>Кредиты</span><span class="val">25,0–31,0%</span></div>
+      </div>
+      <div class="panel hidden" data-panel="3y">
+        <div class="row"><span>Вклады</span><span class="val">11,5–12,8%</span></div>
+        <div class="row"><span>Ипотека</span><span class="val">11,0–16,0%</span></div>
+        <div class="row"><span>Кредиты</span><span class="val">24,5–30,5%</span></div>
+      </div>
+      <p class="caption">Диапазоны — ориентир по открытым данным банков и ЦБ на 09.07.2026. Не является индивидуальной рекомендацией.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Что внутри (Вертикали) -->
+<section id="verticals">
+  <div class="wrap">
+    <h2 class="section-title">Что внутри</h2>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="icon">💰</div>
+        <h3>Финансы и банки</h3>
+        <p>Вклады, карты, РКО, ипотека — сравнения, калькуляторы, разбор условий.</p>
+        <a href="fin/" class="card-link">kredato.com/fin →</a>
+      </div>
+      <div class="card">
+        <div class="icon">🛡️</div>
+        <h3>Страхование</h3>
+        <p>ОСАГО, КАСКО, ипотечное — как не переплатить и где дешевле.</p>
+        <a href="strah/" class="card-link">kredato.com/strah →</a>
+      </div>
+      <div class="card">
+        <div class="icon">📈</div>
+        <h3>Заработок и обучение</h3>
+        <p>Подработка, фриланс, курсы (в т.ч. нейросети) — разбор реальных способов.</p>
+        <a href="earning/" class="card-link">kredato.com/earning →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Как это работает (В5: .steps) -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Как это работает</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Подписываешься</h3>
+        <p>Оставляешь email и подтверждаешь подписку письмом (double opt-in, по 152-ФЗ).</p>
+      </div>
+      <div class="step">
+        <h3>Получаешь разбор</h3>
+        <p>Гайды, чек-листы и актуальные ставки ЦБ — без спама и кликбейта.</p>
+      </div>
+      <div class="step">
+        <h3>Решаешь сам</h3>
+        <p>Сравниваешь по открытым данным и выбираешь продукт у провайдера напрямую.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Место будущей таблицы сравнения (В1) + in-content disclosure (В8) -->
+<section>
+  <div class="wrap">
+    <div class="notice advertiser">
+      <p>Эти таблицы — наш разбор по открытым данным. Среди показанных есть партнёрские предложения: если оформите — нам идёт комиссия, вам условия не ухудшаются. Решение за вами.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Финальный CTA-баннер (В7: + .calc-note) -->
+<section id="subscribe" class="cta-band">
+  <div class="wrap">
+    <h2>Подпишись: разбор ставок ЦБ каждую неделю</h2>
+    <p>Бесплатные гайды и полезная рассылка. Отписаться можно в один клик.</p>
+    <div class="lead-form">
+      <form action="subscribe.html" method="post" data-uni-form>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="consent">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">Я согласен(а) на получение рассылки и обработку персональных данных по <a href="privacy.html">Политике ПДн</a> (152-ФЗ). Подтверждение подписки придёт на email.</label>
+        </div>
+        <button type="submit" class="btn block">Подписаться</button>
+      </form>
+    </div>
+    <span class="calc-note">Пример: на 09.07.2026 средняя ставка по вкладам 13,3% — расчёт под ключом в гайде</span>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-cols">
+      <div>
+        <div class="logo">Kred<span>ato</span></div>
+        <p class="text-muted">Честные разборы банковских продуктов, страхования и заработка для RU/СНГ.</p>
+        <div class="badges">
+          <span class="badge">не фин. рекомендация</span>
+          <span class="badge">double opt-in</span>
+          <span class="badge">152-ФЗ</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="fin/">Финансы</a>
+        <a href="strah/">Страхование</a>
+        <a href="earning/">Заработок</a>
+      </div>
+      <div class="footer-links">
+        <a href="privacy.html">Политика ПДн</a>
+        <a href="subscribe.html">Подписка</a>
+      </div>
+    </div>
+    <div class="notice advertiser">
+      <p>Мы зарабатываем, когда вы оформляете продукт по нашей ссылке — комиссию платит нам провайдер, вам условия не ухудшаются. А факты в разборе берём из открытых данных банков и ЦБ, а не от рекламодателей.</p>
+    </div>
+    <div class="disclaimer">
+      <p>© 2026 Kredato. Материалы носят информационный характер и <strong>не являются финансовой рекомендацией</strong>.</p>
+      <p><a href="privacy.html">Политика обработки персональных данных</a> · <a href="fin/">Финансы</a> · <a href="strah/">Страхование</a> · <a href="earning/">Заработок</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky-CTA (В6: мягкий slide-up, НЕ попап) -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="inner">
+    <p>Гайды по финансам — без спама</p>
+    <form class="optin-inline" action="subscribe.html" method="post" data-uni-form>
+      <input type="email" name="email" placeholder="you@example.com" required>
+      <button type="submit" class="btn sm">Подписаться</button>
+    </form>
+    <button class="close" aria-label="Закрыть">×</button>
+  </div>
+</div>
+
+<script src="assets/js/site.js"></script>
+<script src="assets/js/subscribe.js" defer></script>
+<div class="disclaimer-strip">Материалы сайта Kredato носят информационный характер и не являются индивидуальной инвестиционной, финансовой или юридической рекомендацией.</div>
+</body>
+</html>

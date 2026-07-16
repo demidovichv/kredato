@@ -1,0 +1,499 @@
+/* kredato.com — единый стиль хаба + поддоменов (чистый CSS, без фреймворков) */
+:root{
+  --bg:#0f1420; --bg2:#161c2c; --card:#1c2436; --text:#e8ecf5;
+  --muted:#9aa6c0; --accent:#3d7bff; --accent2:#27c09a; --border:#2a3450;
+  --warn:#ffb020; --danger:#ff5c6c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+header.site{background:var(--bg2);border-bottom:1px solid var(--border);padding:16px 0}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:22px;font-weight:800;color:var(--text)}
+.logo span{color:var(--accent)}
+nav a{margin-left:18px;color:var(--muted);font-size:15px}
+nav a:hover{color:var(--text)}
+.hero{padding:64px 0 48px;text-align:center;background:linear-gradient(180deg,var(--bg2),var(--bg))}
+.hero h1{font-size:40px;margin:0 auto 14px;max-width:860px;line-height:1.2}
+.hero p{color:var(--muted);font-size:18px;max-width:860px;margin:0 auto 28px}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:13px 28px;border-radius:8px;font-weight:600;font-size:16px}
+.btn:hover{background:#2f6ae8;text-decoration:none}
+.btn.alt{background:var(--accent2)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;padding:40px 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+.card h3{margin-bottom:10px;font-size:19px}
+.card p{color:var(--muted);font-size:15px}
+section{padding:40px 0}
+h2{font-size:28px;margin-bottom:20px}
+.lead-form{background:transparent;border:0;border-radius:0;padding:0;max-width:560px;margin:0 auto}
+.lead-form label{display:block;font-size:14px;color:var(--muted);margin:14px 0 6px}
+.lead-form input[type=email]{width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:15px}
+.lead-form .consent{display:flex;align-items:flex-start;gap:10px;margin:16px 0;font-size:14px;line-height:1.5;color:var(--k-muted);text-align:left}
+.lead-form .consent input{margin:3px 0 0;flex:0 0 auto;width:18px;height:18px}
+.lead-form .consent label{display:block;flex:1 1 auto;margin:0;font-size:14px;color:var(--k-muted)}
+.note{font-size:13px;color:var(--muted);text-align:center;margin-top:14px}
+footer.site{background:var(--bg2);border-top:1px solid var(--border);padding:28px 0;margin-top:40px;color:var(--muted);font-size:14px}
+.tag{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--muted);margin-bottom:12px}
+.tag.green{color:var(--accent2);border-color:var(--accent2)}
+.warning{background:#2a1f10;border:1px solid var(--warn);color:var(--warn);padding:12px 16px;border-radius:8px;font-size:14px;margin:16px 0}
+@media(max-width:600px){.hero h1{font-size:30px}.cards{grid-template-columns:1fr}}
+
+/* =====================================================================
+   KREDATO DESIGN SYSTEM — расширение (2026-07-09)
+   Тёмная тема как база. Светлая альтернатива — добавь <html class="theme-light">.
+   Все базовые классы выше сохранены без изменений.
+   Принцип: доверительный финансовый стиль, НЕ агрессивный (compliance).
+   Запрещено: «гарантированный доход», «халява», «100% одобрение».
+   ===================================================================== */
+
+/* ---------- 1. ДИЗАЙН-ТОКЕНЫ (расширенные) ---------- */
+:root{
+  /* Бренд-палитра (уже задана выше, продублирована для единого места) */
+  --k-bg:#0f1420;            /* основной фон */
+  --k-bg-2:#161c2c;          /* приподнятый фон (header/footer/hero) */
+  --k-card:#1c2436;          /* карточки/формы */
+  --k-text:#e8ecf5;          /* основной текст */
+  --k-muted:#9aa6c0;         /* вторичный текст */
+  --k-accent:#3d7bff;        /* основной акцент (синий, доверие) */
+  --k-accent-2:#27c09a;      /* вторичный акцент (бирюзовый, «доход/рост») */
+  --k-border:#2a3450;        /* границы */
+  --k-warn:#ffb020;          /* предупреждение */
+  --k-danger:#ff5c6c;        /* ошибка/риск */
+
+  /* Производные для тёмной темы */
+  --k-accent-soft:rgba(61,123,255,.14);   /* фон под акцентные блоки */
+  --k-accent-2-soft:rgba(39,192,154,.14);
+  --k-bg-elev:#222b40;       /* всплывающие/наведённые */
+  --k-on-accent:#ffffff;     /* текст на акцентных кнопках */
+  --k-shade:rgba(0,0,0,.35); /* затемнение/оверлеи */
+  --k-ring:rgba(61,123,255,.45); /* фокус-кольцо */
+
+  /* Типографика */
+  --k-font-sans:"Inter","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Arial,"Helvetica Neue",sans-serif;
+  --k-font-mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  --fs-xs:13px; --fs-sm:15px; --fs-base:17px; --fs-md:19px;
+  --fs-lg:23px; --fs-xl:29px; --fs-2xl:36px; --fs-3xl:46px;
+  --lh-tight:1.2; --lh-base:1.6;
+  --fw-med:500; --fw-semibold:600; --fw-bold:700; --fw-extra:800;
+
+  /* Радиусы */
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-pill:999px;
+
+  /* Тени (мягкие, не «кричащие») */
+  --shadow-sm:0 1px 2px rgba(0,0,0,.30);
+  --shadow-md:0 6px 18px rgba(0,0,0,.35);
+  --shadow-lg:0 18px 48px rgba(0,0,0,.45);
+  --shadow-focus:0 0 0 3px var(--k-ring);
+
+  /* Отступы (шкала 4px) */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px;
+  --sp-6:24px; --sp-8:32px; --sp-10:40px; --sp-12:48px; --sp-16:64px;
+
+  /* Сетка */
+  --wrap-max:980px;          /* совпадает с .wrap */
+  --wrap-wide:1200px;        /* для поддоменов с широким контентом */
+  --gap:20px;
+
+  /* Прочее */
+  --k-transition:160ms ease;
+  --k-z-header:100;
+}
+
+/* Фикс: наследуем системный шрифт из токенов (не ломая базовый body) */
+body{font-family:var(--k-font-sans);font-size:var(--fs-base);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- 2. СВЕТЛАЯ АЛЬТЕРНАТИВА ---------- */
+/* Добавь на <html>: class="theme-light". Переопределяем только цвета. */
+.theme-light{
+  --k-bg:#f5f7fb; --k-bg-2:#ffffff; --k-card:#ffffff; --k-text:#16202e;
+  --k-muted:#5b6678; --k-accent:#2f6ae8; --k-accent-2:#129e7c;
+  --k-border:#e2e7f0; --k-warn:#b9760a; --k-danger:#d83a48;
+  --k-accent-soft:rgba(47,106,232,.08);
+  --k-accent-2-soft:rgba(18,158,124,.08);
+  --k-bg-elev:#eef2f8; --k-on-accent:#ffffff;
+  --k-shade:rgba(20,30,50,.30);
+  --k-ring:rgba(47,106,232,.40);
+  --shadow-sm:0 1px 2px rgba(20,30,50,.08);
+  --shadow-md:0 6px 18px rgba(20,30,50,.10);
+  --shadow-lg:0 18px 48px rgba(20,30,50,.14);
+}
+/* Светлая тема: header/footer/hero используют --k-bg-2, поэтому перекрашиваются сами */
+.theme-light header.site,
+.theme-light footer.site,
+.theme-light .hero{background:var(--k-bg-2);border-color:var(--k-border)}
+.theme-light .hero{background:linear-gradient(180deg,var(--k-bg-2),var(--k-bg))}
+.theme-light .warning{background:#fdf3e2;border-color:var(--k-warn);color:var(--k-warn)}
+.theme-light .lead-form input[type=email]{background:var(--k-bg-2)}
+
+/* ---------- 3. БАЗОВАЯ ТИПОГРАФИКА (уровень системы) ---------- */
+h1,h2,h3,h4{color:var(--k-text);line-height:var(--lh-tight);font-weight:var(--fw-bold)}
+h1{font-size:var(--fs-3xl)} h2{font-size:var(--fs-xl)} h3{font-size:var(--fs-lg)}
+p{color:var(--k-text)}
+.text-muted{color:var(--k-muted)}
+.text-accent{color:var(--k-accent)}
+.text-accent2{color:var(--k-accent-2)}
+.text-center{text-align:center}
+.lead{font-size:var(--fs-md);color:var(--k-muted);max-width:680px;margin:0 auto}
+.section-title{font-size:var(--fs-xl);margin-bottom:var(--sp-2)}
+.eyebrow{font-size:var(--fs-sm);letter-spacing:.04em;text-transform:uppercase;color:var(--k-muted);font-weight:var(--fw-semibold)}
+
+/* ---------- 4. КОМПОНЕНТЫ ---------- */
+
+/* 4.1 Навигация (улучшенная, mobile-first) */
+header.site{position:sticky;top:0;z-index:var(--k-z-header)}
+header.site .wrap{align-items:center}
+nav{display:flex;align-items:center;gap:2px;flex-wrap:wrap}
+nav a{margin-left:0;padding:8px 12px;border-radius:var(--r-sm);transition:background var(--k-transition),color var(--k-transition)}
+nav a:hover{background:var(--k-accent-soft);color:var(--k-text);text-decoration:none}
+nav a.active{color:var(--k-text);font-weight:var(--fw-semibold)}
+/* бургер для мобильных (по умолчанию скрыт, показывается в @media <=600px — В9) */
+.nav-toggle{display:none}
+
+/* 4.2 Кнопки (CTA) — система вариантов */
+.btn{
+  border:1px solid transparent;cursor:pointer;text-align:center;
+  font-family:inherit;transition:background var(--k-transition),transform var(--k-transition),box-shadow var(--k-transition);
+  color:var(--k-on-accent);
+}
+.btn:hover{transform:translateY(-1px);text-decoration:none;box-shadow:var(--shadow-md)}
+.btn:active{transform:translateY(0)}
+.btn:focus-visible{outline:none;box-shadow:var(--shadow-focus)}
+/* размеры */
+.btn.sm{padding:9px 18px;font-size:var(--fs-sm)}
+.btn.lg{padding:16px 34px;font-size:var(--fs-md)}
+.btn.block{display:block;width:100%}
+/* варианты */
+.btn.alt{background:var(--k-accent-2);color:var(--k-on-accent)}
+.btn.alt:hover{background:#1fa883}
+.btn.ghost{background:transparent;color:var(--k-text);border-color:var(--k-border)}
+.btn.ghost:hover{background:var(--k-bg-elev);border-color:var(--k-accent)}
+.btn.link{background:transparent;color:var(--k-accent);padding:8px 4px}
+.btn.link:hover{background:transparent;text-decoration:underline;box-shadow:none;transform:none}
+/* кнопка-«мягкая» для вторичных CTA (compliance-дружелюбная) */
+.btn.soft{background:var(--k-accent-soft);color:var(--k-accent);border-color:transparent}
+.btn.soft:hover{background:var(--k-accent-soft);filter:brightness(1.1)}
+
+/* 4.3 Hero (расширенный) */
+.hero{position:relative;overflow:hidden}
+.hero .lead{margin:0 auto var(--sp-6);max-width:860px}
+.hero .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:860px;margin:0 auto}
+.hero h1{font-size:var(--fs-3xl)}
+/* поддоменные hero могут быть уже/выше */
+.hero.compact{padding:48px 0 36px}
+/* 4.3b Hero с инструментом справа (В2 — action-in-hero) */
+.hero.has-tool{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;text-align:left}
+.hero.has-tool .hero-actions{justify-content:flex-start}
+.hero.has-tool .lead{margin-left:0}
+@media(max-width:900px){
+  .hero.has-tool{grid-template-columns:1fr;text-align:center}
+  .hero.has-tool .hero-actions{justify-content:center}
+  .hero.has-tool .lead{margin:0 auto}
+}
+
+/* 4.4 Карточки — система */
+.card{transition:transform var(--k-transition),border-color var(--k-transition),box-shadow var(--k-transition)}
+.card:hover{transform:translateY(-2px);border-color:var(--k-accent);box-shadow:var(--shadow-md)}
+.card .icon{font-size:28px;line-height:1;margin-bottom:var(--sp-3)}
+.card h3{font-size:var(--fs-lg)}
+.card .card-link{display:inline-block;margin-top:var(--sp-3);font-weight:var(--fw-semibold);color:var(--k-accent)}
+.card.feature{border-color:var(--k-accent-2)}
+.card.feature:hover{border-color:var(--k-accent-2)}
+/* сетки карточек через утилиты */
+.grid{display:grid;gap:var(--gap)}
+.grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.grid.cols-auto{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+/* 4.5 Opt-in форма (расширенная) */
+.lead-form{border-radius:0;box-shadow:none}
+.lead-form h2,.lead-form h3{margin-bottom:var(--sp-2)}
+.lead-form .form-row{margin-bottom:var(--sp-4)}
+.lead-form input[type=email]:focus{outline:none;border-color:var(--k-accent);box-shadow:var(--shadow-focus)}
+.lead-form input[type=email]::placeholder{color:var(--k-muted);opacity:.7}
+.lead-form .consent{line-height:1.45}
+.lead-form .consent input[type=checkbox]{width:18px;height:18px;accent-color:var(--k-accent);flex:0 0 auto}
+.lead-form .consent a{color:var(--k-accent)}
+.lead-form .form-success{
+  display:none;background:var(--k-accent-2-soft);border:1px solid var(--k-accent-2);
+  color:var(--k-accent-2);padding:12px 16px;border-radius:var(--r-sm);margin-top:14px;font-size:14px;
+}
+.lead-form.submitted .form-success{display:block}
+/* упрощённая инлайн-форма (в футере/внутри текста) */
+.optin-inline{display:flex;gap:10px;flex-wrap:wrap;max-width:520px;margin:0 auto}
+.optin-inline input[type=email]{
+  flex:1 1 240px;padding:12px;border-radius:var(--r-sm);border:1px solid var(--k-border);
+  background:var(--k-bg);color:var(--k-text);font-size:15px;
+}
+.optin-inline input[type=email]:focus{outline:none;border-color:var(--k-accent);box-shadow:var(--shadow-focus)}
+
+/* 4.6 Теги / бейджи */
+.tag{font-weight:var(--fw-semibold);letter-spacing:.01em}
+.tag.blue{color:var(--k-accent);border-color:var(--k-accent)}
+.tag.warn{color:var(--k-warn);border-color:var(--k-warn)}
+
+/* 4.7 Блок-«предупреждение» (compliance) — уже есть .warning; добавим .notice */
+.notice{
+  display:flex;gap:12px;align-items:flex-start;background:var(--k-accent-soft);
+  border:1px solid var(--k-accent);border-radius:var(--r-md);padding:16px 18px;font-size:14px;line-height:1.6;color:var(--k-text);margin:var(--sp-6) 0;
+}
+.notice .notice-icon{flex:0 0 auto;font-size:18px}
+.notice.warn{background:#2a1f10;border-color:var(--k-warn);color:var(--k-warn)}
+
+/* 4.8 Футер с дисклеймером */
+footer.site{padding:var(--sp-10) 0}
+footer.site .wrap{display:flex;flex-direction:column;gap:var(--sp-4)}
+footer.site .footer-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--sp-8)}
+footer.site .footer-links a{display:block;color:var(--k-muted);padding:4px 0;font-size:14px}
+footer.site .footer-links a{display:block;color:var(--k-muted);padding:4px 0;font-size:var(--fs-sm)}
+footer.site .disclaimer{
+  font-size:14px;line-height:1.6;color:var(--k-muted);
+  border-top:1px solid var(--k-border);padding-top:var(--sp-5);margin-top:var(--sp-2);
+}
+footer.site .disclaimer strong{color:var(--k-text)}
+footer.site .disclaimer a{color:var(--k-muted);text-decoration:underline}
+
+/* 4.9 Контентные блоки (статьи/разборы) */
+.prose{max-width:860px;margin:0 auto}
+.prose h2{margin-top:var(--sp-10);font-size:var(--fs-xl)}
+.prose h3{margin-top:var(--sp-6);font-size:var(--fs-lg)}
+.prose p,.prose li{color:var(--k-text);font-size:var(--fs-base);line-height:1.7}
+.prose ul,.prose ol{margin:var(--sp-4) 0 var(--sp-4) var(--sp-6);color:var(--k-muted)}
+.prose li{margin-bottom:var(--sp-3)}
+.prose a:not(.btn){color:var(--k-accent);text-decoration:underline}
+.prose a.btn{color:var(--k-on-accent);text-decoration:none}
+/* обложка статьи: в рамках колонки контента, со скруглением и отступами (НЕ на весь экран) */
+.cover{display:block;width:100%;max-width:860px;height:auto;margin:var(--sp-6) auto;border-radius:var(--r-lg);border:1px solid var(--k-border);box-shadow:var(--shadow-md)}
+/* иллюстрация внутри секции */
+.figure{margin:var(--sp-8) auto;max-width:860px}
+.figure svg{width:100%;height:auto;border-radius:var(--r-md);border:1px solid var(--k-border);background:var(--k-bg-2)}
+.figure figcaption{font-size:var(--fs-sm);color:var(--k-muted);text-align:center;margin-top:var(--sp-2)}
+.callout{
+  background:var(--k-card);border:1px solid var(--k-border);border-left:3px solid var(--k-accent);
+  border-radius:var(--r-md);padding:18px 20px;margin:var(--sp-8) 0;font-size:var(--fs-base);line-height:1.65;
+}
+.callout.ok{border-left-color:var(--k-accent-2)}
+.callout.warn{border-left-color:var(--k-warn)}
+
+/* 4.10 Сравнительная таблица (для фин/страх) */
+.table-wrap{overflow-x:auto;margin:var(--sp-5) 0;border-radius:var(--r-md);border:1px solid var(--k-border)}
+table.compare{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+table.compare th,table.compare td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--k-border)}
+table.compare th{background:var(--k-bg-2);color:var(--k-text);font-weight:var(--fw-semibold)}
+table.compare tbody tr:hover{background:var(--k-bg-elev)}
+table.compare td{color:var(--k-muted)}
+table.compare .col-accent{color:var(--k-accent-2);font-weight:var(--fw-semibold)}
+/* 4.10b Расширение: ранг + суб-скоры (В1) */
+table.compare .rank{width:34px;color:var(--k-muted);font-weight:var(--fw-bold);text-align:center}
+table.compare .rank.top{color:var(--k-accent-2)}
+table.compare .score{display:inline-flex;align-items:center;gap:6px;font-size:13px}
+table.compare .score .bar{width:60px;height:6px;border-radius:999px;background:var(--k-border);overflow:hidden}
+table.compare .score .bar > i{display:block;height:100%;background:var(--k-accent-2)}
+table.compare tr.winner{background:var(--k-accent-2-soft)}
+
+/* 4.11 Калькулятор-заглушка (минимальный визуал) */
+.calculator{background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-lg);padding:var(--sp-6);max-width:560px;margin:0 auto}
+.calculator .field{margin-bottom:var(--sp-4)}
+.calculator label{display:block;font-size:14px;color:var(--k-muted);margin-bottom:6px}
+.calculator input,.calculator select{
+  width:100%;padding:12px;border-radius:var(--r-sm);border:1px solid var(--k-border);
+  background:var(--k-bg);color:var(--k-text);font-size:15px;font-family:inherit;
+}
+.calculator input:focus,.calculator select:focus{outline:none;border-color:var(--k-accent);box-shadow:var(--shadow-focus)}
+.calculator .result{
+  margin-top:var(--sp-4);padding:14px 16px;border-radius:var(--r-sm);
+  background:var(--k-accent-2-soft);border:1px solid var(--k-accent-2);color:var(--k-accent-2);font-weight:var(--fw-semibold);
+}
+
+/* 4.12 CTA-баннер (призыв посередине/в конце страницы) — спокойная тёмная карточка по центру,
+   БЕЗ яркой синей обводки (она визуально «разъезжалась» на всю ширину). Кнопка — синий акцент. */
+.cta-band{
+  background:var(--k-card);
+  border:1px solid var(--k-border);border-radius:var(--r-lg);
+  padding:var(--sp-8);text-align:center;margin:var(--sp-8) auto;max-width:860px;
+}
+.cta-band h2{margin-bottom:var(--sp-3)}
+.cta-band p{color:var(--k-muted);max-width:560px;margin:0 auto var(--sp-5);font-size:var(--fs-base)}
+/* кнопка в CTA — синий акцент (консистентно с логотипом), НЕ бирюзовый */
+.cta-band .btn{background:var(--k-accent);color:var(--k-on-accent);border-color:transparent}
+.cta-band .btn:hover{background:#2f6ae8}
+/* 4.12b calc-note — примерный расчёт (В7) */
+.cta-band .calc-note{display:inline-block;margin-top:10px;font-size:13px;color:var(--k-accent-2);
+  background:var(--k-accent-2-soft);border:1px solid var(--k-accent-2);border-radius:var(--r-pill);padding:4px 12px}
+
+/* UniSender-слот подписки: pending (домен/кабинет не готовы).
+   НЕ скрываем форму (иначе она невидима до подключения виджета) —
+   нативная форма работает через POST в subscribe.html.
+   Класс --pending оставлен как маркер для subscribe.js (заменит на виджет позже). */
+/* [data-uni-form].uni-slot--pending{display:none} */
+
+/* 4.13 Стикер-«не фин. рекомендация» (всегда видимый, compliance) */
+.disclaimer-strip{
+  font-size:12px;color:var(--k-muted);background:var(--k-bg-2);
+  border-top:1px solid var(--k-border);padding:10px 0;text-align:center;
+}
+
+/* 4.14 Trust-бейджи: блок «почему доверяют» + бейдж-лента (В3) */
+.trust-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0}
+.trust-strip .t{background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-md);padding:20px;text-align:center}
+.trust-strip .t b{display:block;font-size:24px;color:var(--k-accent-2)}
+.trust-strip .t span{font-size:13px;color:var(--k-muted)}
+.badges{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0}
+.badges .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--k-muted);
+  border:1px solid var(--k-border);border-radius:var(--r-pill);padding:6px 12px;background:var(--k-bg-2)}
+.badges .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--k-accent-2)}
+@media(max-width:600px){.trust-strip{grid-template-columns:1fr}}
+
+/* 4.15 Живые ставки / rates-ticker (В4) */
+.rates-ticker{background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-lg);padding:20px;margin:24px 0}
+.rates-ticker .tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.rates-ticker .tabs button{background:var(--k-bg);border:1px solid var(--k-border);color:var(--k-muted);
+  border-radius:var(--r-pill);padding:6px 14px;font-size:13px;cursor:pointer}
+.rates-ticker .tabs button[aria-selected="true"]{background:var(--k-accent-soft);color:var(--k-accent);border-color:var(--k-accent)}
+.rates-ticker .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--k-border);font-size:14px}
+.rates-ticker .row:last-child{border-bottom:0}
+.rates-ticker .val{color:var(--k-accent-2);font-weight:var(--fw-semibold)}
+.rates-ticker .caption{font-size:12px;color:var(--k-muted);margin-top:10px}
+
+/* 4.16 3-шаговая схема «как это работает» (В5) */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:step}
+.steps .step{position:relative;background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-md);padding:24px 20px 20px}
+.steps .step::before{counter-increment:step;content:"0" counter(step);position:absolute;top:-14px;left:20px;
+  background:var(--k-accent);color:#fff;font-weight:var(--fw-bold);font-size:14px;padding:4px 10px;border-radius:var(--r-pill)}
+.steps .step h3{margin:8px 0 8px;font-size:18px}
+.steps .step p{color:var(--k-muted);font-size:14px}
+@media(max-width:600px){.steps{grid-template-columns:1fr}}
+
+/* 4.17 Sticky-CTA (мягкий slide-up, НЕ попап) (В6) */
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--k-bg-2);border-top:1px solid var(--k-border);
+  padding:10px 16px;transform:translateY(110%);transition:transform .3s ease;box-shadow:var(--shadow-lg)}
+.sticky-cta.show{transform:translateY(0)}
+.sticky-cta .inner{display:flex;align-items:center;gap:12px;max-width:980px;margin:0 auto;flex-wrap:wrap}
+.sticky-cta p{font-size:13px;color:var(--k-muted);margin:0;flex:1 1 200px}
+.sticky-cta .optin-inline{flex:1 1 240px;margin:0}
+.sticky-cta .close{background:none;border:0;color:var(--k-muted);font-size:20px;cursor:pointer;line-height:1}
+@media(max-width:600px){.sticky-cta p{display:none}}
+
+/* 4.18 Партнёрский disclosure (compliance: 38-ФЗ, не называем сети) — В8 (уже был) */
+.notice.advertiser{display:block;background:transparent;border:1px solid var(--k-border);border-radius:var(--r-sm);color:var(--k-muted);font-size:14px;line-height:1.6;margin:var(--sp-6) auto;max-width:860px;padding:12px 16px}
+.notice.advertiser p{margin:0}
+.notice.advertiser a{color:var(--k-accent)}
+
+/* 4.19 Сегментированный контроль вертикали (вместо <select>) */
+.segmented{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:var(--sp-4) 0}
+.segmented input{position:absolute;opacity:0;width:0;height:0}
+.segmented label.seg{display:inline-flex;align-items:center;padding:10px 18px;border-radius:var(--r-pill);border:1px solid var(--k-border);background:var(--k-bg);color:var(--k-muted);font-size:var(--fs-sm);cursor:pointer;transition:all var(--k-transition)}
+.segmented label.seg:hover{border-color:var(--k-accent);color:var(--k-text)}
+.segmented input:checked + label.seg{background:var(--k-text);border-color:var(--k-text);color:var(--k-bg);font-weight:var(--fw-semibold)}
+.segmented input:focus-visible + label.seg{box-shadow:var(--shadow-focus)}
+
+/* ---------- 5. УТИЛИТЫ ---------- */
+.mt-2{margin-top:var(--sp-2)} .mt-4{margin-top:var(--sp-4)} .mt-6{margin-top:var(--sp-6)} .mt-8{margin-top:var(--sp-8)}
+.mb-2{margin-bottom:var(--sp-2)} .mb-4{margin-bottom:var(--sp-4)} .mb-6{margin-bottom:var(--sp-6)}
+.hidden{display:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* ---------- 6. АДАПТИВ (mobile-first) ---------- */
+/* Базовые стили выше — mobile. Укрупняем от >=600px и >=900px. */
+
+/* Планшет / малый десктоп */
+@media(min-width:600px){
+  .hero h1{font-size:var(--fs-3xl)}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+}
+@media(min-width:900px){
+  .wrap{max-width:1080px}
+  .wrap-wide{max-width:var(--wrap-wide);margin:0 auto;padding:0 24px}
+  .hero{padding:80px 0 56px}
+  .hero h1{font-size:var(--fs-3xl)}
+  section{padding:56px 0}
+  .cards{gap:24px}
+}
+
+/* Мобайл (<=600px) — компактнее навигация, стек кнопок, бургер (В9) */
+@media(max-width:600px){
+  .hero{padding:44px 0 32px}
+  .hero h1{font-size:28px}
+  .hero .hero-actions{flex-direction:column;align-items:stretch}
+  .hero .hero-actions .btn{width:100%}
+  /* В9: бургер-меню — nav скрыт до открытия */
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;background:var(--k-bg-elev);
+    border:1px solid var(--k-border);border-radius:var(--r-sm);width:40px;height:40px;color:var(--k-text);cursor:pointer;font-size:20px}
+  nav{display:none;width:100%}
+  nav.open{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+  nav a{padding:10px 12px;width:100%}
+  .grid.cols-2,.grid.cols-3{grid-template-columns:1fr}
+  footer.site .footer-cols{grid-template-columns:1fr;gap:var(--sp-5)}
+  .optin-inline{flex-direction:column}
+  .optin-inline .btn{width:100%}
+  .lead-form{padding:20px}
+  .segmented{flex-direction:column}
+  h2{font-size:24px}
+  /* мобайл: держим читаемый размер, не мельчим */
+  body{font-size:var(--fs-base)}
+  .prose p,.prose li{font-size:var(--fs-base)}
+  .card p{font-size:var(--fs-sm)}
+  .disclaimer,.notice.advertiser,.footer-links a{font-size:14px}
+}
+/* 4.13 PDF-магниты в блоке подписки — список скачиваемых файлов */
+.pdf-note{
+  margin-top:14px;padding-top:14px;border-top:1px dashed var(--k-border);
+  font-size:var(--fs-sm);color:var(--k-muted);text-align:left;
+}
+.pdf-note .pdf-title{font-weight:var(--fw-semibold);color:var(--k-text);margin-bottom:6px}
+.pdf-note ul{margin:0;padding-left:18px;list-style:none}
+.pdf-note li{margin:4px 0}
+.pdf-note a{color:var(--k-accent);font-weight:var(--fw-semibold);text-decoration:none}
+.pdf-note a:hover{text-decoration:underline}
+.pdf-note .pdf-ico{opacity:.8;margin-right:4px}
+
+/* 4.14 Монетизация (вердикт 2) — промо-карточка, сайдбар, флоат */
+.ad-label{
+  display:inline-block;font-size:11px;font-weight:var(--fw-semibold);
+  letter-spacing:.04em;color:var(--k-muted);opacity:.75;margin-bottom:8px;
+}
+.promo-card{
+  max-width:860px;margin:28px auto;padding:20px 22px;
+  background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-lg);
+  text-align:center;
+}
+.promo-card h3{margin:0 0 14px;font-size:20px}
+.promo-card .btn{display:inline-block}
+/* мобильный флоат — скрыт на десктопе, виден при скролле */
+.cta-floating{
+  position:fixed;bottom:18px;right:18px;z-index:60;
+  display:none;background:var(--k-accent);color:var(--k-on-accent);
+  font-weight:var(--fw-semibold);padding:12px 18px;border-radius:999px;
+  box-shadow:0 8px 24px rgba(15,26,43,.25);text-decoration:none;
+}
+.cta-floating:hover{background:#2f6ae8}
+/* сайдбар — десктоп, sticky; на мобильном скрыт (layout статей одноколоночный) */
+.sidebar{display:none}
+@media (min-width:1024px){
+  .layout-with-sidebar{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start}
+  .sidebar{display:block;position:sticky;top:20px}
+  .sidebar .widget{
+    background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-lg);
+    padding:16px;margin-bottom:16px;font-size:var(--fs-sm);color:var(--k-muted);
+  }
+}
+@media (max-width:1023px){
+  .cta-floating{display:inline-flex}
+}
+
+/* Условия оффера (компактная таблица) */
+.cond{width:100%;border-collapse:collapse;margin:var(--sp-4) 0 var(--sp-6);font-size:15px}
+.cond th,.cond td{padding:10px 14px;border-bottom:1px solid var(--k-border);text-align:left;vertical-align:top}
+.cond th{width:160px;color:var(--k-muted);font-weight:var(--fw-semibold);background:var(--k-bg-2)}
+.cond td{color:var(--k-text)}
+/* Гео-ограничения + CTA на витрину */
+.geo-block{margin:var(--sp-6) 0;padding:16px 18px;border:1px solid var(--k-warn);
+  border-left:4px solid var(--k-warn);border-radius:10px;background:var(--k-bg-2);font-size:15px;line-height:1.55}
+.geo-block strong{color:var(--k-warn);font-weight:var(--fw-bold)}
+.geo-block ul{margin:8px 0 0;padding-left:20px}
+.geo-block ul li{margin:2px 0}
+.geo-note{margin:8px 0 0;font-size:14px;color:var(--k-muted)}
+.geo-cta{margin:var(--sp-6) 0;padding:16px 18px;border:1px solid var(--k-border);border-radius:10px;
+  background:var(--k-bg-2);font-size:15px}
+.geo-cta p{margin:0 0 12px}

@@ -1,0 +1,50 @@
+# kredato.com — cloak-редиректы /go/<brand> -> партнёрский транзит
+# Cloudflare Pages НЕ умеет PHP, поэтому используем _redirects (статический 302).
+# В публичном HTML ТОЛЬКО /go/<brand>; реальный транзит — здесь (правило 6).
+# Цели пока -> / (безопасно). ЗАМЕНИТЬ на реальные транзиты перед деплоем.
+
+# === FIN (leads.su, акк 237667) ===
+/go/psb-cashback      https://pxl.leads.su/click/f287dff6f7b9ea82451af8fc751bc1b7  302
+/go/mts-skidka        https://pxl.leads.su/click/17f0629ef4bcdbd9b158157a713c4af1  302
+/go/mts-money         https://pxl.leads.su/click/5b03b2ecf22a5c0740dfa9cffaacd09d  302
+/go/mikroklad         https://pxl.leads.su/click/7c3ec832ac856d8c3061a5dfd12ad55b  302
+/go/akbars-islamic    https://pxl.leads.su/click/957e2b1f583628364700434a216e8e55  302
+/go/dobrozaim         https://pxl.leads.su/click/8dd50edeb1302c9730a541b0b66c3005  302
+/go/dobrozaim-pts     https://pxl.leads.su/click/1756eb938dae5fc31974a6549161f805  302
+# Займер виртуальная кредитная карта [credit_cards][sale] ID 11516 — 5097₽ фикс за выдачу картой новому клиенту, РФ
+/go/zaimer-card       https://pxl.leads.su/click/c2a3ea54ec17b3da5c33bb7b50535e23  302
+/go/zaimer-vip         / 302
+
+# === STRAH (leads.su, Т-Банк) ===
+/go/tbank-ipoteka     / 302
+/go/tbank-kasko       https://pxl.leads.su/click/f197a67a81f56559588ca445f3466e3b  302
+/go/tbank-osago       https://pxl.leads.su/click/dca079332cd17a95ad56b275af71ecea  302
+
+# === АЛИАСЫ легаси slug'ов из статей F/S -> новые бренды (цели подставим с транзитами leads.su) ===
+# /go/tbank — legacy: карточные статьи УЖЕ переключены на /go/zaimer-card;
+# оставляем редирект на АК Барс ДК для старых индексов/ссылок (больше не ссылается ни одна статья)
+/go/tbank             /go/akbars-islamic  302
+# === Т-Банк: ВКЛАДЫ (РФ) — статьи fin/vkldy/* -> Т-Банк вклад 10424 (осн.) / Газпром 10418 / Финсуп 10610
+/go/tbank-vklad       https://pxl.leads.su/click/5be8616552bd442d615e930e325f7341  302
+# === Т-Банк: РКО для ИП (РФ) — статья fin/rko/dlya-ip-2026 -> Альфа РКО 2287 (осн.) / Т-Банк 856 / Уралсиб 8982
+/go/tbank-rko         https://pxl.leads.su/click/27cc33467f8f9dd289106ae7adc63de5  302
+# /go/sber (ипотека/ОСАГО/КАСКО в статьях) -> маппим на Т-Банк страховые по смыслу
+/go/sber-ipoteka      /go/tbank-ipoteka  302
+/go/sber-kasko        /go/tbank-kasko  302
+/go/sber-osago        /go/tbank-osago  302
+/go/sber              /go/tbank-ipoteka  302
+# /go/webzaim (МФО в статьях) -> Доброзайм New (11862, РФ). zaymy-kazahstan (КЗ) НЕ вести (гео РФ) — см. комплаенс
+/go/webzaim           /go/dobrozaim  302
+
+# === EARN (Лид Магнит, denis49@gmail.com) ===
+# E3: НЕЙРОСЕТИ [CPS] (offer 2506)
+/go/neyroseti         https://to.kurs-go.ru/click?pid=30248&offer_id=2506  302
+# E1: Стабильный заработок на Вайб-кодинге [RevShare] (offer 2627)
+/go/vibe-coding       https://to.kurs-go.ru/click?pid=30248&offer_id=2627  302
+/go/telegram-zarabotok  https://to.kurs-go.ru/click?pid=30248&offer_id=2063  302
+/go/vtoraya-zarplata  https://to.kurs-go.ru/click?pid=30248&offer_id=2629  302
+/go/zhenshchiny-30    https://to.kurs-go.ru/click?pid=30248&offer_id=2065  302
+/go/7-sposobov        https://to.kurs-go.ru/click?pid=30248&offer_id=2537  302
+
+# неизвестные /go/* -> главная (ловит легаси sber/webzaim/tbank)
+/go/*   / 302

@@ -1,0 +1,5 @@
+# Cloak: /go/<brand> -> go/index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^go/(.*)$ go/index.php [L,QSA]
