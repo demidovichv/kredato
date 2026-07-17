@@ -497,3 +497,18 @@ table.compare tr.winner{background:var(--k-accent-2-soft)}
 .geo-cta{margin:var(--sp-6) 0;padding:16px 18px;border:1px solid var(--k-border);border-radius:10px;
   background:var(--k-bg-2);font-size:15px}
 .geo-cta p{margin:0 0 12px}
+/* Hub pages (генератор) — хлебные крошки, сайдбар, расклад */
+.crumbs{font-size:14px;color:var(--k-muted);margin-bottom:12px}
+.crumbs a{color:var(--k-muted)}
+.crumbs a:hover{color:var(--k-text);text-decoration:underline}
+main .layout{max-width:980px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr 280px;gap:32px;align-items:start}
+.layout .sidebar{position:sticky;top:24px;background:var(--k-bg-2);border:1px solid var(--k-border);
+  border-radius:var(--k-radius);padding:20px}
+.sidebar h3{font-size:16px;margin:0 0 12px;color:var(--k-text)}
+.sidebar .rubrics{list-style:none;padding:0;margin:0}
+.sidebar .rubrics li{margin:2px 0}
+.sidebar .rubrics a{display:block;padding:9px 12px;border-radius:8px;color:var(--k-text);font-size:15px}
+.sidebar .rubrics a:hover{background:var(--k-card);color:var(--k-accent-2)}
+.sidebar .rubrics li.active a{background:rgba(61,123,255,.12);color:var(--k-accent);border-left:3px solid var(--k-accent)}
+.hub-list .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.layout .sidebar{position:static}}
