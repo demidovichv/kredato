@@ -14,7 +14,11 @@
 # Займер виртуальная кредитная карта [credit_cards][sale] ID 11516 — 5097₽ фикс за выдачу картой новому клиенту, РФ
 /go/zaimer-card       https://pxl.leads.su/click/c2a3ea54ec17b3da5c33bb7b50535e23  302
 /go/turbozaim         https://pxl.leads.su/click/df93ce2a95fdf82f8462acccb51a00c5  302
-/go/zaimer-vip         / 302
+/go/zaimer-vip         https://pxl.leads.su/click/dfcb4a402203d748d0ede60cc33d39c8  302
+/go/srochno-dengi      https://pxl.leads.su/click/1e4a6e6583f849a4ada58ab9dd563eb4  302
+/go/bystro-dengi       https://pxl.leads.su/click/1e191192f7544e16abd86d4defb65c28  302
+/go/fin5               https://pxl.leads.su/click/da2e79966bd0ff7c19da3fe4419eb49d  302
+/go/credit365          https://pxl.leads.su/click/1ff0e342e06d23b206261e097175ba4f  302
 
 # === STRAH (leads.su, Т-Банк) ===
 /go/tbank-ipoteka     / 302
