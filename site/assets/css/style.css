@@ -193,11 +193,11 @@ nav a.active{color:var(--k-text);font-weight:var(--fw-semibold)}
 }
 
 /* 4.4 Карточки — система */
-.card{transition:transform var(--k-transition),border-color var(--k-transition),box-shadow var(--k-transition)}
-.card:hover{transform:translateY(-2px);border-color:var(--k-accent);box-shadow:var(--shadow-md)}
+.card{position:relative;transition:transform var(--k-transition),border-color var(--k-transition),box-shadow var(--k-transition)}
+.card:hover{transform:translateY(-2px);border-color:var(--k-accent);box-shadow:var(--shadow-md);cursor:pointer}
 .card .icon{font-size:28px;line-height:1;margin-bottom:var(--sp-3)}
 .card h3{font-size:var(--fs-lg)}
-.card .card-link{display:inline-block;margin-top:var(--sp-3);font-weight:var(--fw-semibold);color:var(--k-accent)}
+.card .card-link{position:absolute;inset:0;z-index:3;font-size:0;line-height:0;color:transparent;text-decoration:none;background:transparent}
 .card.feature{border-color:var(--k-accent-2)}
 .card.feature:hover{border-color:var(--k-accent-2)}
 /* сетки карточек через утилиты */
