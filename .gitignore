@@ -1,0 +1,23 @@
+# Всё, кроме site/, не уходит в прод (Cloudflare Pages build dir = site)
+pdf_tools/
+reports/
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/
+*.tmp
+
+# Служебное Obsidian / Drive-синк — не в репо
+.obsidian/
+.tmp.driveupload/
+
+# Локальные артефакты сборки (не в репо)
+prod.css
+
+# Бренд CharlyCash (спам-тематика) — НЕ в публичный репозиторий kredato
+charly_cash/
+charly_plan.html
+shared/
+statister_mail/
+_exports/
