@@ -3,7 +3,7 @@
   "use strict";
 
   var GA4 = "G-J8KKCQS6YS";   // Google Analytics 4 (Measurement ID)
-  var YM  = null;             // Яндекс.Метрика: вставить номер счётчика (число)
+  var YM  = 110885200;        // Яндекс.Метрика (номер счётчика)
 
   /* --- Google Analytics 4 --- */
   (function () {
@@ -25,6 +25,6 @@
       k = e.createElement(t); a = e.getElementsByTagName(t)[0];
       k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
     })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-    ym(YM, "init", { clickmap: true, trackLinks: true, accurateTrackBounce: true });
+    ym(YM, "init", { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
   }
 })();
