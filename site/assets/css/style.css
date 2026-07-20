@@ -1,6 +1,6 @@
 /* kredato.com — единый стиль хаба + поддоменов (чистый CSS, без фреймворков) */
 :root{
-  --bg:#0f1420; --bg2:#161c2c; --card:#1c2436; --text:#e8ecf5;
+  --bg:#0f1420; --bg2:#161c2c; --card:#1c2436; --text:#e8ecf5; --k-card:#1c2436; --k-border:#2a3450; --r-lg:14px; --r-md:10px; --sp-6:24px; --sp-4:16px;
   --muted:#9aa6c0; --accent:#3d7bff; --accent2:#27c09a; --border:#2a3450;
   --warn:#ffb020; --danger:#ff5c6c;
 }
@@ -566,4 +566,32 @@ main .layout{max-width:980px;margin:0 auto;padding:0 20px;display:grid;grid-temp
 .sidebar .rubrics a:hover{background:var(--k-card);color:var(--k-accent-2)}
 .sidebar .rubrics li.active a{background:rgba(61,123,255,.12);color:var(--k-accent);border-left:3px solid var(--k-accent)}
 .hub-list .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+
+/* === интерактив: калькуляторы === */
+.calculator .field input[type=number]{width:100%;padding:10px 12px;background:var(--k-bg2);border:1px solid var(--k-border);border-radius:var(--r-md);color:var(--k-text);font-size:15px}
+.calculator .field input:focus{outline:none;border-color:var(--k-accent)}
+/* скрыть нативные стрелки-спиннеры (вид 2000-х) */
+.calculator .field input[type=number]::-webkit-outer-spin-button,
+.calculator .field input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.calculator .field input[type=number]{-moz-appearance:textfield;appearance:textfield}
+/* кастомный степпер: − [поле] + */
+.stepper{display:flex;align-items:center;gap:8px}
+.stepper input[type=number]{flex:1;text-align:center;font-variant-numeric:tabular-nums;font-weight:600;padding:10px 4px}
+.step-btn{flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:1px solid var(--k-border);background:var(--k-bg2);color:var(--k-accent);font-size:20px;line-height:1;cursor:pointer;transition:background .15s,border-color .15s,transform .05s;display:flex;align-items:center;justify-content:center;user-select:none}
+.step-btn:hover{background:rgba(61,123,255,.15);border-color:var(--k-accent)}
+.step-btn:active{transform:scale(.92)}
+.step-btn:focus{outline:none;border-color:var(--k-accent);box-shadow:0 0 0 3px rgba(61,123,255,.25)}
+.calculator select{width:100%;padding:10px 12px;background:var(--k-bg2);border:1px solid var(--k-border);border-radius:var(--r-md);color:var(--k-text);font-size:15px}
+.calculator select:focus{outline:none;border-color:var(--k-accent)}
+.calc-sub{display:block;margin-top:4px;font-size:12px;color:var(--k-muted)}
+.geo-out,.ai-out{margin-top:14px}
+.geo-list{list-style:none;padding:0;margin:0}
+.geo-list li{margin:6px 0}
+.geo-list a{display:block;padding:10px 12px;background:var(--k-bg2);border:1px solid var(--k-border);border-radius:var(--r-md);color:var(--k-text);text-decoration:none;transition:border-color .15s,background .15s}
+.geo-list a:hover{border-color:var(--k-accent);background:rgba(61,123,255,.08)}
+.field-check{margin:6px 0 10px;font-size:14px;color:var(--k-muted)}
+.field-check input{vertical-align:middle;margin-right:6px;accent-color:var(--k-accent)}
+.result{margin-top:14px;padding:14px 16px;background:rgba(39,192,154,.08);border:1px solid rgba(39,192,154,.3);border-radius:var(--r-md);font-size:17px;line-height:1.5}
+.result b{color:var(--k-accent-2);font-weight:700}
+.calc-note{margin-top:10px;font-size:12px;color:var(--k-muted)}
 @media(max-width:860px){.layout{grid-template-columns:1fr}.layout .sidebar{position:static}}

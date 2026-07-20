@@ -56,11 +56,55 @@
     </ul>
   </aside>
 </div></main>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Калькулятор кредитной карты</h2>
+    <div class="calculator" data-calc="card">
+      <div class="field">
+        <label for="cr-amt">Сумма покупки, ₽</label>
+        <div class="stepper" data-step="1000">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="cr-amt" data-f="amt" placeholder="100 000" min="0">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="cr-rate">Ставка, % годовых</label>
+        <div class="stepper" data-step="0.5">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="cr-rate" data-f="rate" placeholder="29.9" min="0" step="0.1">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="cr-months">Срок погашения, мес.</label>
+        <div class="stepper" data-step="1">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="cr-months" data-f="months" placeholder="12" min="1">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="cr-grace">Льготный период, дн.</label>
+        <div class="stepper" data-step="5">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="cr-grace" data-f="grace" placeholder="100" min="0">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="result">Заполните поля</div>
+      <p class="calc-note">Средний платёж при погашении равными долями. Если укладываетесь в льготный период — переплаты нет.</p>
+    </div>
+  </div>
+</section>
+
 <footer class="site"><div class="wrap">
   <div class="footer-links">
     <a href="../../">Хаб</a> · <a href="../../strah/">Страхование</a> · <a href="../../earning/">Заработок</a> · <a href="../../privacy.html">ПДн</a>
   </div>
   <div class="disclaimer"><p>© 2026 Kredato. Материалы носят информационный характер и не являются финансовой рекомендацией.</p></div>
 </div></footer>
+<script src="../../assets/js/calc.js" defer></script>
 </body>
 </html>

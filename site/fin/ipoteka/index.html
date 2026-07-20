@@ -46,11 +46,47 @@
     </ul>
   </aside>
 </div></main>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Калькулятор ипотеки</h2>
+    <div class="calculator" data-calc="mortgage">
+      <div class="field">
+        <label for="mt-amt">Сумма кредита, ₽</label>
+        <div class="stepper" data-step="100000">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="mt-amt" data-f="amt" placeholder="5 000 000" min="0">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="mt-rate">Ставка, % годовых</label>
+        <div class="stepper" data-step="0.1">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="mt-rate" data-f="rate" placeholder="19" min="0" step="0.1">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="mt-years">Срок, лет</label>
+        <div class="stepper" data-step="1">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="mt-years" data-f="years" placeholder="20" min="1">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="result">Заполните поля</div>
+      <p class="calc-note">Аннуитетный платёж. Оценка «под ключ» — реальная ставка зависит от субсидий и вашего профиля.</p>
+    </div>
+  </div>
+</section>
+
 <footer class="site"><div class="wrap">
   <div class="footer-links">
     <a href="../../">Хаб</a> · <a href="../../strah/">Страхование</a> · <a href="../../earning/">Заработок</a> · <a href="../../privacy.html">ПДн</a>
   </div>
   <div class="disclaimer"><p>© 2026 Kredato. Материалы носят информационный характер и не являются финансовой рекомендацией.</p></div>
 </div></footer>
+<script src="../../assets/js/calc.js" defer></script>
 </body>
 </html>

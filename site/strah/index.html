@@ -59,28 +59,72 @@
 
 <section>
   <div class="wrap">
-    <h2 class="section-title">Калькулятор ОСАГО (заглушка)</h2>
-    <div class="calculator">
+    <h2 class="section-title">Калькулятор ОСАГО</h2>
+    <div class="calculator" data-calc="osago">
       <div class="field">
-        <label for="calc-power">Мощность, л.с.</label>
-        <input type="number" id="calc-power" placeholder="100" disabled>
+        <label for="os-power">Мощность, л.с.</label>
+        <div class="stepper" data-step="10">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="os-power" data-f="power" placeholder="100" min="0">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
       </div>
       <div class="field">
-        <label for="calc-age">Возраст водителя</label>
-        <input type="number" id="calc-age" placeholder="30" disabled>
+        <label for="os-age">Возраст водителя</label>
+        <div class="stepper" data-step="1">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="os-age" data-f="age" placeholder="30" min="18">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
       </div>
       <div class="field">
-        <label for="calc-region">Регион</label>
-        <select id="calc-region" disabled>
-          <option>Москва</option>
-          <option>СПб</option>
-          <option>Регионы</option>
+        <label for="os-region">Регион</label>
+        <select id="os-region" data-f="region">
+          <option value="msk">Москва</option>
+          <option value="spb">Санкт-Петербург</option>
+          <option value="reg" selected>Регионы</option>
         </select>
       </div>
-      <div class="result">Калькулятор в разработке — появится в ближайшее время.</div>
+      <div class="field">
+        <label for="os-exp">Стаж, лет</label>
+        <div class="stepper" data-step="1">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="os-exp" data-f="exp" placeholder="5" min="0">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="result">Заполните поля</div>
+      <p class="calc-note">Оценка по базовому тарифу ЦБ — диапазон, не точная цена. Реальный полис считается с коэффициентами бонус-малус.</p>
     </div>
   </div>
 </section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Конструктор КАСКО</h2>
+    <div class="calculator" data-calc="kasko">
+      <div class="field">
+        <label for="ks-car">Стоимость авто, ₽</label>
+        <div class="stepper" data-step="50000">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="ks-car" data-f="car" placeholder="1 500 000" min="0">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="ks-ageY">Возраст авто, лет</label>
+        <div class="stepper" data-step="1">
+          <button type="button" class="step-btn" data-dir="-1" aria-label="Уменьшить">−</button>
+          <input type="number" id="ks-ageY" data-f="ageY" placeholder="3" min="0">
+          <button type="button" class="step-btn" data-dir="1" aria-label="Увеличить">+</button>
+        </div>
+      </div>
+      <div class="field field-check">
+        <label><input type="checkbox" data-f="isnew"> Новое авто (с салона)</label>
+      </div>
+      <div class="result">Заполните поля</div>
+      <p class="calc-note">Оценка «под ключ» по доле от стоимости. Реальная премия зависит от франшизы, возраста и страховщика.</p>
+    </div>
 
 <section id="subscribe" class="cta-band">
   <div class="wrap">
@@ -137,6 +181,7 @@
   </div>
 </footer>
 
+<script src="../assets/js/calc.js" defer></script>
 <script src="../assets/js/subscribe.js" defer></script>
 <div class="disclaimer-strip">Материалы сайта Kredato носят информационный характер и не являются индивидуальной инвестиционной, финансовой или юридической рекомендацией.</div>
 </body>
