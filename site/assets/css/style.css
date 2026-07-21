@@ -391,9 +391,10 @@ table.compare tr.winner{background:var(--k-accent-2-soft)}
 
 /* 4.14 Trust-бейджи: блок «почему доверяют» + бейдж-лента (В3) */
 .trust-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0}
-.trust-strip .t{background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-md);padding:20px;text-align:center}
+.trust-strip .t{background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--k-radius);padding:20px;text-align:center}
 .trust-strip .t b{display:block;font-size:24px;color:var(--k-accent-2)}
 .trust-strip .t span{font-size:13px;color:var(--k-muted)}
+@media(max-width:600px){.trust-strip{grid-template-columns:1fr}}
 .badges{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0}
 .badges .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--k-muted);
   border:1px solid var(--k-border);border-radius:var(--r-pill);padding:6px 12px;background:var(--k-bg-2)}
@@ -415,7 +416,7 @@ table.compare tr.winner{background:var(--k-accent-2-soft)}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:step}
 .steps .step{position:relative;background:var(--k-card);border:1px solid var(--k-border);border-radius:var(--r-md);padding:24px 20px 20px}
 .steps .step::before{counter-increment:step;content:"0" counter(step);position:absolute;top:-14px;left:20px;
-  background:var(--k-accent);color:#fff;font-weight:var(--fw-bold);font-size:14px;padding:4px 10px;border-radius:var(--r-pill)}
+  background:var(--k-accent);color:#fff;font-weight:var(--fw-bold);font-size:14px;padding:4px 10px;border-radius:var(--k-radius)}
 .steps .step h3{margin:8px 0 8px;font-size:18px}
 .steps .step p{color:var(--k-muted);font-size:14px}
 @media(max-width:600px){.steps{grid-template-columns:1fr}}
@@ -567,6 +568,7 @@ main .layout{max-width:980px;margin:0 auto;padding:0 20px;display:grid;grid-temp
 .sidebar .rubrics li.active a{background:rgba(61,123,255,.12);color:var(--k-accent);border-left:3px solid var(--k-accent)}
 @media(min-width:601px){
 .hub-list .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.hub-list .grid.cols-3{grid-template-columns:repeat(3,1fr)}
 }
 
 /* === интерактив: калькуляторы === */
