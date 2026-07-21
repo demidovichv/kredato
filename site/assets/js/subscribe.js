@@ -1,37 +1,78 @@
-/* kredato.com — подключение формы подписки (UniSender, Фри).
+/* kredato.com — единый сборщик подписок через Cloudflare Pages Function /api/subscribe.
  *
- * ВСТАВЬ СВОЙ ID ФОРМЫ из кабинета UniSender (Рассылки → Формы →
- * скрипт для сайта). Один ID → подхватывается на всех 26 страницах.
- * Пока ID пустой — форма показывает плейсхолдер и НЕ шлёт (безопасно).
+ * Resend — основной/резерв канал. UniSender остаётся в резерве, если нет ключа.
  */
+
 (function () {
-  // >>> ВПИШИ СЮДА ID ФОРМЫ UNISENDER ПОСЛЕ РЕГИСТРАЦИИ <<<
-  var UNI_FORM_ID = ''; // напр. 'abc123def'
+  // Основной эндпоинт. Если Functions отключены — graceful fallback на subscribe.html.
+  var API_SUBSCRIBE = '/api/subscribe';
+
+  function resolveSource() {
+    var path = window.location.pathname || '';
+    if (/\/earning\//.test(path)) return 'earning';
+    if (/\/fin\//.test(path)) return 'fin';
+    if (/\/strah\//.test(path)) return 'strah';
+    if (/\/jobs\//.test(path)) return 'jobs';
+    if (/\/learn\//.test(path)) return 'learn';
+    if (/\/of\//.test(path)) return 'of';
+    return 'kredato';
+  }
+
+  function resolveMagnet() {
+    var el = document.querySelector('[data-magnet]');
+    return el ? String(el.getAttribute('data-magnet') || '').trim() : '';
+  }
 
   function slots() {
     return document.querySelectorAll('[data-uni-form]');
   }
 
-  if (!UNI_FORM_ID) {
-    // Домен/кабинет ещё не готовы: оставляем плейсхолдер, не шлём.
-    slots().forEach(function (s) {
-      s.classList.add('uni-slot--pending');
+  function bindForm(form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = (form.querySelector('input[name="email"]') || {}).value || '';
+      var consent = (form.querySelector('input[name="consent"]') || {}).checked;
+      var source = (form.querySelector('input[name="vertical"]:checked') || {}).value || resolveSource();
+      var magnet = resolveMagnet();
+      var successEl = form.querySelector('.form-success');
+      var btn = form.querySelector('button[type="submit"]');
+
+      if (!email || !consent) {
+        if (successEl) { successEl.textContent = 'Укажите email и согласие на рассылку.'; successEl.style.display = 'block'; }
+        return;
+      }
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Отправка…'; }
+      if (successEl) { successEl.style.display = 'none'; }
+
+      fetch(API_SUBSCRIBE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source, magnet }),
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var msg = 'Проверь почту — там письмо с подтверждением подписки.';
+        if (data.status === 'queued_without_resend') msg = 'Подписка в очереди. Подтверждение придёт после настройки.';
+        if (data.status === 'doi_sent') msg = 'Проверь почту — там письмо с подтверждением подписки.';
+        if (data.status === 'resend_error') msg = 'Ошибка отправки. Попробуйте ещё раз через минуту.';
+        if (successEl) { successEl.textContent = '✅ ' + msg; successEl.style.display = 'block'; }
+      })
+      .catch(function () {
+        if (successEl) { successEl.textContent = 'Ошибка соединения. Попробуйте ещё раз.'; successEl.style.display = 'block'; }
+      })
+      .finally(function () {
+        if (btn) { btn.disabled = false; btn.textContent = 'Подписаться'; }
+      });
     });
-    return;
   }
 
-  // Подгружаем виджет UniSender один раз.
-  if (!window.__uniLoaded) {
-    window.__uniLoaded = true;
-    var sc = document.createElement('script');
-    sc.async = true;
-    sc.src = 'https://us1.unisender.com/v5/uni_public_form.js';
-    document.head.appendChild(sc);
-  }
-
-  // Помечаем слоты готовыми к инициализации виджетом.
+  // Fallback: если на странице есть форма с action="../../subscribe.html" или "#"
+  // переключаем на fetch-submit выше. Оставляем совместимость.
   slots().forEach(function (s) {
-    s.setAttribute('data-uni-id', UNI_FORM_ID);
-    s.classList.add('uni-slot--ready');
+    if (!s.hasAttribute('data-subscribe-bound')) {
+      s.setAttribute('data-subscribe-bound', '1');
+      bindForm(s);
+    }
   });
 })();

@@ -1,0 +1,9 @@
+name = "kredato"
+compatibility_date = "2026-07-21"
+
+[vars]
+RESEND_FROM = "Kredato <noreply@kredato.com>"
+
+# Secrets set via Cloudflare Dashboard (Settings → Environment variables):
+# RESEND_API_KEY
+# RESEND_AUDIENCE_ID (optional)
