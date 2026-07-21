@@ -1,0 +1,33 @@
+name: "Update deposit rates"
+
+on:
+  schedule:
+    # 09:00 MSK (06:00 UTC в летний период, 07:00 UTC зимой)
+    - cron: "0 6 * * *"
+  workflow_dispatch: # можно запустить вручную кнопкой
+
+jobs:
+  update-rates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --quiet beautifulsoup4 requests
+
+      - name: Fetch and patch rates
+        run: python scripts/update-deposit-rate.py
+
+      - name: Show git status
+        run: git status --short
