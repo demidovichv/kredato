@@ -295,7 +295,9 @@
     <div class="lead-form">
       <h2>Подпишись на разборы по финансам под твою ситуацию</h2>
       <p class="note">Чек-лист «7 ошибок при выборе вклада» (PDF) и калькулятор доходности вклада. Без спама. Отписаться в один клик.</p>
-      <form action="../../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="fin">
+          <input type="hidden" name="magnet" value="magnet-4-deposit-mistakes">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-fin" value="fin" checked>
           <label class="seg" for="v-fin">Финансы</label>

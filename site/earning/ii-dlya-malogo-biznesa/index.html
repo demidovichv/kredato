@@ -210,7 +210,9 @@
     <div class="lead-form">
       <h2>Гайд по ИИ для малого бизнеса — без программиста</h2>
       <p class="note">Понравилось? Оставь email — пришлём чек-листы и свежие способы заработка без вложений. Без спама. Отписаться в один клик.</p>
-      <form action="../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="earning">
+          <input type="hidden" name="magnet" value="magnet-11-neuro-marketer">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-earn" value="earning" checked>
           <label class="seg" for="v-earn">Заработок</label>

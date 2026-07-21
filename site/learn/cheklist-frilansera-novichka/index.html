@@ -230,7 +230,9 @@
     <div class="lead-form">
       <h2>Получи чек-лист фрилансера и подборку заказов</h2>
       <p class="note">Бесплатный PDF-чек-лист «9 шагов до первого заказа» + раз в неделю свежая подборка проверенных вакансий и курсов для новичков. Без спама, отписаться в один клик.</p>
-      <form action="../../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="learn">
+          <input type="hidden" name="magnet" value="">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-earn" value="earning" checked>
           <label class="seg" for="v-earn">Заработок</label>

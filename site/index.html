@@ -194,7 +194,9 @@
     <h2>Подпишись: разбор ставок ЦБ каждую неделю</h2>
     <p>Бесплатные гайды и полезная рассылка. Отписаться можно в один клик.</p>
     <div class="lead-form">
-      <form action="subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="kredato">
+          <input type="hidden" name="magnet" value="">
+
         <div class="form-row">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" placeholder="you@example.com" required>
@@ -246,7 +248,7 @@
 <div class="sticky-cta" id="stickyCta">
   <div class="inner">
     <p>Гайды по финансам — без спама</p>
-    <form class="optin-inline" action="subscribe.html" method="post" data-uni-form>
+    <form class="optin-inline" action="/api/subscribe" method="POST" method="post" data-uni-form>
       <input type="email" name="email" placeholder="you@example.com" required>
       <button type="submit" class="btn sm">Подписаться</button>
     </form>

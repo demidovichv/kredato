@@ -1,0 +1,67 @@
+{
+  "magnet-2-debit-cards-rates": {
+    "title": "Таблица дебетовых карт с процентом на остаток 2026",
+    "file": "magnet-2-debit-cards-rates.pdf",
+    "vertical": "fin"
+  },
+  "magnet-3-deposits-rates": {
+    "title": "Таблица ставок по вкладам и накопительным счетам 2026",
+    "file": "magnet-3-deposits-rates.pdf",
+    "vertical": "fin"
+  },
+  "magnet-4-deposit-mistakes": {
+    "title": "7 ошибок при выборе вклада",
+    "file": "magnet-4-deposit-mistakes.pdf",
+    "vertical": "fin"
+  },
+  "magnet-5-rko-ip-guide": {
+    "title": "РКО для ИП: что выгоднее в 2026",
+    "file": "magnet-5-rko-ip-guide.pdf",
+    "vertical": "fin"
+  },
+  "magnet-6-family-mortgage": {
+    "title": "Семейная ипотека 2026: документы и условия",
+    "file": "magnet-6-family-mortgage.pdf",
+    "vertical": "fin"
+  },
+  "magnet-7-bad-credit-approval": {
+    "title": "Как повысить шанс одобрения при плохой КИ",
+    "file": "magnet-7-bad-credit-approval.pdf",
+    "vertical": "fin"
+  },
+  "magnet-8-before-policy": {
+    "title": "Чек-лист: что проверить перед покупкой полиса",
+    "file": "magnet-8-before-policy.pdf",
+    "vertical": "strah"
+  },
+  "magnet-9-3-insurers-compare": {
+    "title": "Сравнение 3 страховых: КАСКО/ОСАГО",
+    "file": "magnet-9-3-insurers-compare.pdf",
+    "vertical": "strah"
+  },
+  "magnet-10-resume-template": {
+    "title": "Шаблон резюме для подработки/фриланса",
+    "file": "magnet-10-resume-template.pdf",
+    "vertical": "earning"
+  },
+  "magnet-11-neuro-marketer": {
+    "title": "Гайд: нейросети для маркетолога за 7 дней",
+    "file": "magnet-11-neuro-marketer.pdf",
+    "vertical": "earning"
+  },
+  "magnet-12-freelancer-checklist": {
+    "title": "Чек-лист фрилансера-новичка",
+    "file": "magnet-12-freelancer-checklist.pdf",
+    "vertical": "earning"
+  },
+  "magnet-13-voice-earning": {
+    "title": "Заработок голосом: пошаговой гайд",
+    "file": "magnet-13-voice-earning.pdf",
+    "vertical": "earning"
+  },
+  "prototype-1-credit-card": {
+    "title": "Кредитная карта: прототип сравнения",
+    "file": "prototype-1-credit-card.pdf",
+    "vertical": "fin"
+  }
+}

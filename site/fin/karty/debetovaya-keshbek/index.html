@@ -308,7 +308,9 @@
     <div class="lead-form">
       <h2>Подпишись на честные разборы карт под твою ситуацию</h2>
       <p class="note">Таблица ставок по дебетовым картам 2026 и чек-лист «7 способов не переплатить». Без спама. Отписаться в один клик.</p>
-      <form action="../../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="fin">
+          <input type="hidden" name="magnet" value="">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-fin" value="fin" checked>
           <label class="seg" for="v-fin">Финансы</label>

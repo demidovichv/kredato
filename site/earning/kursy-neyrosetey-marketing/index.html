@@ -246,7 +246,9 @@
     <div class="lead-form">
       <h2>Скачай бесплатный гайд и получай раз в неделю подборку проверенных вакансий и курсов</h2>
       <p class="note">Гайд «Нейросети для маркетолога за 7 дней» (PDF) + подборка проверенных программ без рекламного шума. Без спама. Отписаться в один клик.</p>
-      <form action="../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="earning">
+          <input type="hidden" name="magnet" value="magnet-11-neuro-marketer">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-earn" value="earning" checked>
           <label class="seg" for="v-earn">Заработок</label>

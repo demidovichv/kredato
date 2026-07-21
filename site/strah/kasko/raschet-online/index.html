@@ -239,7 +239,9 @@
     <div class="lead-form">
       <h2>Подпишись на разборы по страхованию под твою ситуацию</h2>
       <p class="note">Конструктор КАСКО под твой бюджет и чек-лист «что проверить перед покупкой полиса». Без спама. Отписаться в один клик.</p>
-      <form action="../../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="strah">
+          <input type="hidden" name="magnet" value="magnet-9-3-insurers-compare">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-strah" value="strah" checked>
           <label class="seg" for="v-strah">Страхование</label>

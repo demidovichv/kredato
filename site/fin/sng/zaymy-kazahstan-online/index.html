@@ -303,7 +303,9 @@
     <div class="lead-form">
       <h2>Подпишись на подборку займов СНГ под твоё направление</h2>
       <p class="note">Пришлём подборку предложений под вашу страну (Казахстан, Беларусь, Узбекистан, Киргизия) с реальными условиями. Без «одобрение 100%» и без спама. Отписаться в один клик.</p>
-      <form action="../../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="fin">
+          <input type="hidden" name="magnet" value="">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-fin" value="fin" checked>
           <label class="seg" for="v-fin">Финансы</label>

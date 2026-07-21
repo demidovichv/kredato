@@ -123,7 +123,7 @@ function corsHeaders() {
 }
 
 function doiTemplate(email, magnet) {
-  const confirmUrl = `https://kredato.com/subscribe.html?email=${encodeURIComponent(email)}&magnet=${encodeURIComponent(magnet)}`;
+  const confirmUrl = `https://kredato.com/api/confirm?email=${encodeURIComponent(email)}&magnet=${encodeURIComponent(magnet)}`;
   const pdfUrl = magnet ? `https://kredato.com/assets/pdf/${magnet}.pdf` : 'https://kredato.com/assets/pdf/';
   return `<!DOCTYPE html>
 <html lang="ru">

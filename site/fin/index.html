@@ -101,7 +101,9 @@
     <div class="lead-form">
       <h2>Рассылка по финансам</h2>
       <p class="note">Честные разборы банковских продуктов и калькуляторы — строго с твоего согласия (double opt-in).</p>
-      <form action="../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="fin">
+          <input type="hidden" name="magnet" value="">
+
         <div class="form-row">
           <label for="email-fin">Email</label>
           <input type="email" id="email-fin" name="email" placeholder="you@example.com" required>

@@ -227,7 +227,9 @@
     <div class="lead-form">
       <h2>Скачай бесплатный гайд и получай раз в неделю подборку заказов</h2>
       <p class="note">Чек-лист фрилансера-новичка (PDF) + свежая подборка проверенных заказов и курсов без вложений. Без спама. Отписаться в один клик.</p>
-      <form action="../../../subscribe.html" method="post" data-uni-form>
+      <form action="/api/subscribe" method="POST" method="post" data-uni-form>          <input type="hidden" name="source" value="jobs">
+          <input type="hidden" name="magnet" value="">
+
         <div class="segmented" role="radiogroup" aria-label="Тема рассылки">
           <input type="radio" name="vertical" id="v-earn" value="earning" checked>
           <label class="seg" for="v-earn">Заработок</label>
