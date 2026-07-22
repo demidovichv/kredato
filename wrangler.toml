@@ -2,8 +2,10 @@ name = "kredato"
 compatibility_date = "2026-07-21"
 
 [vars]
-RESEND_FROM = "Kredato <noreply@kredato.com>"
+RESEND_FROM_MYFINQ = "Kredato <noreply@myfinq.xyz>"
+RESEND_FROM_KREDATO = "Kredato <noreply@kredato.com>"
 
 # Secrets set via Cloudflare Dashboard (Settings → Environment variables):
-# RESEND_API_KEY
+# RESEND_API_KEY                    → myfinq.xyz account
+# RESEND_API_KEY_KREDATO            → kredato.com account
 # RESEND_AUDIENCE_ID (optional)

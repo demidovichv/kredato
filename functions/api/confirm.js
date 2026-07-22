@@ -15,8 +15,24 @@ export async function onRequestGet(context) {
     });
   }
 
-  const apiKey = env.RESEND_API_KEY || '';
-  const from = env.RESEND_FROM || 'Kredato <noreply@kredato.com>';
+  const apiKeyKredato = env.RESEND_API_KEY_KREDATO || '';
+  const apiKeyMyfinq = env.RESEND_API_KEY || '';
+  const fromKredato = env.RESEND_FROM_KREDATO || 'Kredato <noreply@kredato.com>';
+  const fromMyfinq = env.RESEND_FROM_MYFINQ || 'Kredato <noreply@myfinq.xyz>';
+
+  let apiKey = '';
+  let from = '';
+  let domainLabel = 'kredato.com';
+
+  if (apiKeyKredato) {
+    apiKey = apiKeyKredato;
+    from = fromKredato;
+    domainLabel = 'kredato.com';
+  } else if (apiKeyMyfinq) {
+    apiKey = apiKeyMyfinq;
+    from = fromMyfinq;
+    domainLabel = 'myfinq.xyz';
+  }
 
   if (!apiKey) {
     return Response.redirect(new URL(`/subscribe.html?confirmed=${encodeURIComponent(email)}`), 302);
@@ -36,13 +52,15 @@ export async function onRequestGet(context) {
         email,
         first_name: '',
         last_name: '',
-        custom_properties: { confirmed_at: new Date().toISOString(), magnet },
+        custom_properties: { confirmed_at: new Date().toISOString(), magnet, domain: domainLabel },
       }),
     }).catch(() => {});
   }
 
   // Welcome email + PDF
   const pdfUrl = magnet ? `https://kredato.com/assets/pdf/${magnet}.pdf` : 'https://kredato.com/assets/pdf/';
+  const brand = domainLabel === 'myfinq.xyz' ? 'myfinq.xyz' : 'kredato.com';
+  const subject = `Добро пожаловать в Kredato — вот ваш PDF`;
   const welcomeHtml = `<!DOCTYPE html>
 <html lang="ru">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
@@ -56,7 +74,7 @@ export async function onRequestGet(context) {
   </p>
   <p style="font-size:13px;color:#6b7280">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
-  <p style="font-size:12px;color:#9ca3af">kredato.com · Отписаться в один клик — в каждом письме.</p>
+  <p style="font-size:12px;color:#9ca3af">${brand} · Отписаться в один клик — в каждом письме.</p>
 </body>
 </html>`;
 
