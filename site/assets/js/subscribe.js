@@ -32,13 +32,20 @@
       e.preventDefault();
       var email = (form.querySelector('input[name="email"]') || {}).value || '';
       var consent = (form.querySelector('input[name="consent"]') || {}).checked;
+
+      if (!email || !email.includes('@')) {
+        var bad = form.querySelector('.form-success');
+        if (bad) { bad.textContent = 'Укажите корректный email и согласие на рассылку.'; bad.style.display = 'block'; }
+        return;
+      }
+
       var source = (form.querySelector('input[name="vertical"]:checked') || {}).value || resolveSource();
       var magnet = resolveMagnet();
       var successEl = form.querySelector('.form-success');
       var btn = form.querySelector('button[type="submit"]');
 
-      if (!email || !consent) {
-        if (successEl) { successEl.textContent = 'Укажите email и согласие на рассылку.'; successEl.style.display = 'block'; }
+      if (!consent) {
+        if (successEl) { successEl.textContent = 'Нужно согласие на рассылку.'; successEl.style.display = 'block'; }
         return;
       }
 

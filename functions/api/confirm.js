@@ -36,7 +36,10 @@ export async function onRequestGet(context) {
     }
 
     if (!apiKey) {
-      return Response.redirect(new URL(`/subscribe.html?confirmed=${encodeURIComponent(email)}`), 302);
+      const confirmedUrl = new URL(request.url);
+      confirmedUrl.pathname = '/subscribe.html';
+      confirmedUrl.search = `confirmed=${encodeURIComponent(email)}`;
+      return Response.redirect(confirmedUrl.toString(), 302);
     }
 
     // Best-effort: помечаем подтверждённым (если настроен audience)
@@ -92,7 +95,10 @@ export async function onRequestGet(context) {
       }),
     }).catch(() => {});
 
-    return Response.redirect(new URL(`/subscribe.html?confirmed=${encodeURIComponent(email)}`), 302);
+    const confirmedUrl = new URL(request.url);
+    confirmedUrl.pathname = '/subscribe.html';
+    confirmedUrl.search = `confirmed=${encodeURIComponent(email)}`;
+    return Response.redirect(confirmedUrl.toString(), 302);
   } catch (err) {
     return new Response(JSON.stringify({ status: 'worker_error', detail: String(err) }), {
       status: 500,
