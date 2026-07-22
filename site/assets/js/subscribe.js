@@ -53,9 +53,11 @@
       .then(function (r) { return r.json(); })
       .then(function (data) {
         var msg = 'Проверь почту — там письмо с подтверждением подписки.';
-        if (data.status === 'queued_without_resend') msg = 'Подписка в очереди. Подтверждение придёт после настройки.';
+        if (data.status === 'queued_without_resend') msg = 'Подписка в очереди. Подтверждение придёт после настройки почты.';
         if (data.status === 'doi_sent') msg = 'Проверь почту — там письмо с подтверждением подписки.';
-        if (data.status === 'resend_error') msg = 'Ошибка отправки. Попробуйте ещё раз через минуту.';
+        if (data.status === 'worker_error') msg = 'Серверная ошибка: ' + (data.detail || 'попробуйте через минуту');
+        if (data.status === 'resend_error') msg = 'Ошибка отправки на почту. Если повторится — напишите нам.';
+        if (data.status === 'error') msg = 'Ошибка: ' + (data.detail || 'проверьте форму');
         if (successEl) { successEl.textContent = '✅ ' + msg; successEl.style.display = 'block'; }
       })
       .catch(function () {

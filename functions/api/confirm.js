@@ -8,60 +8,60 @@ export async function onRequestGet(context) {
   const email = String(url.searchParams.get('email') || '').trim();
   const magnet = String(url.searchParams.get('magnet') || '').trim();
 
-  if (!email || !email.includes('@')) {
-    return new Response(JSON.stringify({ status: 'error', detail: 'email_required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  try {
+    if (!email || !email.includes('@')) {
+      return new Response(JSON.stringify({ status: 'error', detail: 'email_required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-  const apiKeyKredato = env.RESEND_API_KEY_KREDATO || '';
-  const apiKeyMyfinq = env.RESEND_API_KEY || '';
-  const fromKredato = env.RESEND_FROM_KREDATO || 'Kredato <noreply@kredato.com>';
-  const fromMyfinq = env.RESEND_FROM_MYFINQ || 'Kredato <noreply@myfinq.xyz>';
+    const apiKeyKredato = env.RESEND_API_KEY_KREDATO || '';
+    const apiKeyMyfinq = env.RESEND_API_KEY || '';
+    const fromKredato = env.RESEND_FROM_KREDATO || 'Kredato <noreply@kredato.com>';
+    const fromMyfinq = env.RESEND_FROM_MYFINQ || 'Kredato <noreply@myfinq.xyz>';
 
-  let apiKey = '';
-  let from = '';
-  let domainLabel = 'kredato.com';
+    let apiKey = '';
+    let from = '';
+    let domainLabel = 'kredato.com';
 
-  if (apiKeyKredato) {
-    apiKey = apiKeyKredato;
-    from = fromKredato;
-    domainLabel = 'kredato.com';
-  } else if (apiKeyMyfinq) {
-    apiKey = apiKeyMyfinq;
-    from = fromMyfinq;
-    domainLabel = 'myfinq.xyz';
-  }
+    if (apiKeyKredato) {
+      apiKey = apiKeyKredato;
+      from = fromKredato;
+      domainLabel = 'kredato.com';
+    } else if (apiKeyMyfinq) {
+      apiKey = apiKeyMyfinq;
+      from = fromMyfinq;
+      domainLabel = 'myfinq.xyz';
+    }
 
-  if (!apiKey) {
-    return Response.redirect(new URL(`/subscribe.html?confirmed=${encodeURIComponent(email)}`), 302);
-  }
+    if (!apiKey) {
+      return Response.redirect(new URL(`/subscribe.html?confirmed=${encodeURIComponent(email)}`), 302);
+    }
 
-  // Best-effort: помечаем подтверждённым (если настроен audience)
-  const audienceId = env.RESEND_AUDIENCE_ID || '';
-  if (audienceId) {
-    // Resend Audience API: upsert contact with confirmed status
-    await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        first_name: '',
-        last_name: '',
-        custom_properties: { confirmed_at: new Date().toISOString(), magnet, domain: domainLabel },
-      }),
-    }).catch(() => {});
-  }
+    // Best-effort: помечаем подтверждённым (если настроен audience)
+    const audienceId = env.RESEND_AUDIENCE_ID || '';
+    if (audienceId) {
+      await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          first_name: '',
+          last_name: '',
+          custom_properties: { confirmed_at: new Date().toISOString(), magnet, domain: domainLabel },
+        }),
+      }).catch(() => {});
+    }
 
-  // Welcome email + PDF
-  const pdfUrl = magnet ? `https://kredato.com/assets/pdf/${magnet}.pdf` : 'https://kredato.com/assets/pdf/';
-  const brand = domainLabel === 'myfinq.xyz' ? 'myfinq.xyz' : 'kredato.com';
-  const subject = `Добро пожаловать в Kredato — вот ваш PDF`;
-  const welcomeHtml = `<!DOCTYPE html>
+    // Welcome email + PDF
+    const pdfUrl = magnet ? `https://kredato.com/assets/pdf/${magnet}.pdf` : 'https://kredato.com/assets/pdf/';
+    const brand = domainLabel === 'myfinq.xyz' ? 'myfinq.xyz' : 'kredato.com';
+    const subject = `Добро пожаловать в Kredato — вот ваш PDF`;
+    const welcomeHtml = `<!DOCTYPE html>
 <html lang="ru">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1f2937">
@@ -78,19 +78,25 @@ export async function onRequestGet(context) {
 </body>
 </html>`;
 
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from,
-      to: [email],
-      subject: 'Добро пожаловать в Kredato — вот ваш PDF',
-      html: welcomeHtml,
-    }),
-  }).catch(() => {});
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: [email],
+        subject: 'Добро пожаловать в Kredato — вот ваш PDF',
+        html: welcomeHtml,
+      }),
+    }).catch(() => {});
 
-  return Response.redirect(new URL(`/subscribe.html?confirmed=${encodeURIComponent(email)}`), 302);
+    return Response.redirect(new URL(`/subscribe.html?confirmed=${encodeURIComponent(email)}`), 302);
+  } catch (err) {
+    return new Response(JSON.stringify({ status: 'worker_error', detail: String(err) }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }
