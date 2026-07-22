@@ -95,7 +95,7 @@ export async function onRequestGet(context) {
       }),
     }).catch(() => {});
 
-    const confirmedUrl = `${new URL(request.url).origin}/subscribe.html?confirmed=${encodeURIComponent(email)}`;
+    const confirmedUrl = `${new URL(request.url).origin}/subscribe.html?confirmed=${encodeURIComponent(email)}&magnet=${encodeURIComponent(magnet || '')}`;
     return Response.redirect(confirmedUrl, 302);
   } catch (err) {
     return new Response(JSON.stringify({ status: 'worker_error', detail: String(err) }), {

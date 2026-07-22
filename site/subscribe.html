@@ -3,17 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Подписка оформлена — Kredato</title>
+<title>Подписка подтверждена — Kredato</title>
 <link rel="stylesheet" href="assets/css/style.css?v=3">
-<link rel="canonical" href="https://kredato.com/">
-<meta name="description" content="Финал подписки Kredato: подтвердите email по ссылке из письма, чтобы активировать бесплатную рассылку (152-ФЗ).">
-<meta name="keywords" content="подписка, double opt-in, рассылка Kredato">
 <meta name="robots" content="noindex, nofollow">
-  <script src="assets/js/analytics.js" defer></script>
+<script src="assets/js/analytics.js" defer></script>
 <script src="assets/js/consent.js" defer></script>
+<style>
+.state{display:none}
+.state.is-active{display:block}
+.card{max-width:560px;margin:0 auto;padding:24px}
+.lead{color:#374151}
+.muted{color:#6b7280;font-size:14px}
+</style>
 </head>
 <body>
-
 <header class="site">
   <div class="wrap">
     <div class="logo">Kred<span>ato</span></div>
@@ -23,12 +26,24 @@
 
 <section class="hero compact">
   <div class="wrap">
-    <span class="tag green">Double opt-in</span>
-    <h1>Почти готово!</h1>
-    <p class="lead">Мы отправили письмо с подтверждением на указанный email. Перейди по ссылке в письме, чтобы активировать подписку.</p>
-    <p class="note">Не пришло письмо? Проверь папку «Спам» или напиши нам ответом.</p>
-    <div class="hero-actions">
-      <a href="index.html" class="btn alt">На главную</a>
+    <div id="s-confirm" class="state is-active">
+      <span class="tag green">Double opt-in</span>
+      <h1>Почти готово!</h1>
+      <p class="lead">Мы отправили письмо с подтверждением на указанный email. Перейди по ссылке в письме, чтобы активировать подписку.</p>
+      <p class="muted">Не пришло письмо? Проверь папку «Спам» или напиши нам ответом.</p>
+    </div>
+
+    <div id="s-done" class="state">
+      <span class="tag green">Готово</span>
+      <h1>Подписка подтверждена</h1>
+      <p class="lead">Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
+      <p><strong>Ваш PDF-магнит:</strong><br>
+        <a id="pdf-link" href="/assets/pdf/" style="color:#2563eb;text-decoration:none">Скачать файл</a>
+      </p>
+      <p class="muted">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
+      <div class="hero-actions">
+        <a href="index.html" class="btn alt">На главную</a>
+      </div>
     </div>
   </div>
 </section>
@@ -45,5 +60,24 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var email = params.get('confirmed');
+    var magnet = params.get('magnet');
+    var confirmed = Boolean(email);
+    var confirmEl = document.getElementById('s-confirm');
+    var doneEl = document.getElementById('s-done');
+    var linkEl = document.getElementById('pdf-link');
+    if (confirmEl) confirmEl.classList.toggle('is-active', !confirmed);
+    if (doneEl) doneEl.classList.toggle('is-active', confirmed);
+    if (linkEl && magnet) {
+      linkEl.href = '/assets/pdf/' + encodeURIComponent(magnet) + '.pdf';
+      linkEl.textContent = magnet;
+    }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
