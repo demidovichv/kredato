@@ -37,8 +37,8 @@ export async function onRequestGet(context) {
 
     if (!apiKey) {
       const confirmedUrl = new URL(request.url);
-      confirmedUrl.pathname = '/subscribe.html';
-      confirmedUrl.search = `confirmed=${encodeURIComponent(email)}`;
+      confirmedUrl.pathname = '/subscribe/confirmed/';
+      confirmedUrl.search = `confirmed=${encodeURIComponent(email)}&magnet=${encodeURIComponent(magnet || '')}`;
       return Response.redirect(confirmedUrl.toString(), 302);
     }
 
@@ -95,7 +95,7 @@ export async function onRequestGet(context) {
       }),
     }).catch(() => {});
 
-    const confirmedUrl = `${new URL(request.url).origin}/subscribe.html?confirmed=${encodeURIComponent(email)}&magnet=${encodeURIComponent(magnet || '')}`;
+    const confirmedUrl = `${new URL(request.url).origin}/subscribe/confirmed/?confirmed=${encodeURIComponent(email)}&magnet=${encodeURIComponent(magnet || '')}`;
     return Response.redirect(confirmedUrl, 302);
   } catch (err) {
     return new Response(JSON.stringify({ status: 'worker_error', detail: String(err) }), {
