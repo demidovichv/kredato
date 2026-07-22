@@ -58,3 +58,7 @@
 
 # неизвестные /go/* -> главная (ловит легаси sber/webzaim/tbank)
 /go/*   / 302
+
+# Subscribe confirmation page explicit static mapping
+/subscribe.html   /subscribe.html/   308
+/subscribe.html/*   /subscribe.html/:splat   200
