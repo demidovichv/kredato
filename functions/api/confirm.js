@@ -95,10 +95,8 @@ export async function onRequestGet(context) {
       }),
     }).catch(() => {});
 
-    const confirmedUrl = new URL(request.url);
-    confirmedUrl.pathname = '/subscribe.html';
-    confirmedUrl.search = `confirmed=${encodeURIComponent(email)}`;
-    return Response.redirect(confirmedUrl.toString(), 302);
+    const confirmedUrl = `${new URL(request.url).origin}/subscribe.html?confirmed=${encodeURIComponent(email)}`;
+    return Response.redirect(confirmedUrl, 302);
   } catch (err) {
     return new Response(JSON.stringify({ status: 'worker_error', detail: String(err) }), {
       status: 500,
