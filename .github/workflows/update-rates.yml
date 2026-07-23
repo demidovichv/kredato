@@ -1,0 +1,31 @@
+# kredato.com — daily rates update from CBR + Banki.ru
+# Runs at 03:00 UTC = 06:00 MSK
+name: daily-rates
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-rates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install dependencies
+        run: pip install requests lxml beautifulsoup4
+        
+      - name: Fetch and normalize rates
+        run: python scripts/update_rates.py
+        
+      - name: Commit rates
+        run: |
+          git config user.name "kredato-bot"
+          git config user.email "bot@kredato.com"
+          git add site/assets/data/rates.json
+          git diff --cached --quiet || git commit -m "chore: update rates $(date +%Y-%m-%d)"
+          git push
