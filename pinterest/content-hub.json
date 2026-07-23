@@ -1,0 +1,71 @@
+{
+  "verticals": {
+    "fin": {
+      "label": "Финансы",
+      "rubrics": ["vkldy", "karty", "ipoteka", "rko", "sng"],
+      "headline_templates": [
+        "{{benefit}} за {{timeframe}} без {{pain}}",
+        "{{number}} ошибок в {{topic}}, которые стоят вам {{loss}}",
+        "{{specific_result}} за {{duration}}: пошаговый способ для {{audience}}",
+        "почему {{common_action}} работает хуже в {{timeframe}} и что делать вместо"
+      ],
+      "cta_templates": [
+        "Сравните {{object}} за 2 минуты",
+        "Скачайте чек-лист: {{specific_result}}",
+        "Узнайте {{benefit}} — читайте статью",
+        "Сохраните, чтобы не потерять {{useful_thing}}"
+      ]
+    },
+    "strah": {
+      "label": "Страхование",
+      "rubrics": ["osago", "kasko", "ipotechnoe"],
+      "headline_templates": [
+        "{{benefit}} при {{event}} за {{timeframe}}",
+        "{{number}} СК, которые {{action}} быстрее и дешевле",
+        "почему {{common_myth}} — это не страшно, если сделать {{one_thing}}",
+        "{{specific_scenario}}: что проверять перед {{action}}"
+      ],
+      "cta_templates": [
+        "Сравните 3 СК за 2 минуты",
+        "Скачайте чек-лист: что проверить перед покупкой полиса",
+        "Узнайте, как сэкономить {{amount}} на {{object}}"
+      ]
+    },
+    "earning": {
+      "label": "Заработок",
+      "rubrics": ["podrabotka", "kursy"],
+      "headline_templates": [
+        "{{specific_result}} за {{duration}} без {{pain}}",
+        "{{number}} способов {{topic}}, которые работают в {{timeframe}}",
+        "почему {{common_action}} не приводит к {{desired_result}}",
+        "{{audience}}: {{specific_tactic}} уже приносит {{amount}}"
+      ],
+      "cta_templates": [
+        "Скачайте чек-лист: первый заказ за неделю",
+        "Узнайте {{benefit}} — пошаговый план",
+        "Сохраните, чтобы вернуться к {{topic}} later"
+      ]
+    }
+  },
+  "rules": {
+    "no_abs": [
+      "лучший",
+      "быстрый",
+      "удобный",
+      "качественный",
+      "эффективный",
+      "уникальный",
+      "гарантия",
+      "миллион",
+      "без вложений",
+      "пассивный доход"
+    ],
+    "must_have": [
+      "цифра",
+      "срок",
+      "конкретный результат",
+      "ситуация",
+      "действие"
+    ]
+  }
+}

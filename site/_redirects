@@ -14,16 +14,16 @@
 # Займер виртуальная кредитная карта [credit_cards][sale] ID 11516 — 5097₽ фикс за выдачу картой новому клиенту, РФ
 /go/zaimer-card       https://pxl.leads.su/click/c2a3ea54ec17b3da5c33bb7b50535e23  302
 /go/turbozaim         https://pxl.leads.su/click/df93ce2a95fdf82f8462acccb51a00c5  302
-/go/zaimer-vip         https://pxl.leads.su/click/dfcb4a402203d748d0ede60cc33d39c8  302
-/go/srochno-dengi      https://pxl.leads.su/click/1e4a6e6583f849a4ada58ab9dd563eb4  302
-/go/bystro-dengi       https://pxl.leads.su/click/1e191192f7544e16abd86d4defb65c28  302
-/go/fin5               https://pxl.leads.su/click/da2e79966bd0ff7c19da3fe4419eb49d  302
-/go/credit365          https://pxl.leads.su/click/1ff0e342e06d23b206261e097175ba4f  302
-/go/nado-deneg         https://pxl.leads.su/click/abe1289e0fa90ad23c03e61806d60688  302
-/go/creditplus         https://pxl.leads.su/click/8202378781d27bb7e7d4d6644c64951a  302
-/go/boostra            https://pxl.leads.su/click/a8059e1bc5d1a02b906008be6434e35b  302
-/go/krediska           https://pxl.leads.su/click/cfd5ce028725e45ea599e3fe4cb75246  302
-/go/joymoney           https://pxl.leads.su/click/e10b5f0718a36ab65170e66b8482622c  302
+/go/zaimer-vip        https://pxl.leads.su/click/dfcb4a402203d748d0ede60cc33d39c8  302
+/go/srochno-dengi     https://pxl.leads.su/click/1e4a6e6583f849a4ada58ab9dd563eb4  302
+/go/bystro-dengi      https://pxl.leads.su/click/1e191192f7544e16abd86d4defb65c28  302
+/go/fin5              https://pxl.leads.su/click/da2e79966bd0ff7c19da3fe4419eb49d  302
+/go/credit365         https://pxl.leads.su/click/1ff0e342e06d23b206261e097175ba4f  302
+/go/nado-deneg        https://pxl.leads.su/click/abe1289e0fa90ad23c03e61806d60688  302
+/go/creditplus        https://pxl.leads.su/click/8202378781d27bb7e7d4d6644c64951a  302
+/go/boostra           https://pxl.leads.su/click/a8059e1bc5d1a02b906008be6434e35b  302
+/go/krediska          https://pxl.leads.su/click/cfd5ce028725e45ea599e3fe4cb75246  302
+/go/joymoney          https://pxl.leads.su/click/e10b5f0718a36ab65170e66b8482622c  302
 
 # === STRAH (leads.su, Т-Банк) ===
 /go/tbank-ipoteka     https://pxl.leads.su/click/eca292f7fb1d35462127a9de3124a5d1  302
@@ -60,5 +60,9 @@
 /go/*   / 302
 
 # Subscribe confirmation page explicit static mapping
+# В репозитории used as directory-based Pages routes:
+# /subscribe.html -> /subscribe.html/index.html
+# /subscribe/confirmed -> /subscribe/confirmed/index.html
 /subscribe.html   /subscribe.html/   308
 /subscribe.html/*   /subscribe.html/:splat   200
+/subscribe/confirmed   /subscribe/confirmed/   308

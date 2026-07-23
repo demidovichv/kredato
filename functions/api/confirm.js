@@ -61,7 +61,9 @@ export async function onRequestGet(context) {
     }
 
     // Welcome email + PDF
-    const pdfUrl = magnet ? `https://kredato.com/assets/pdf/${magnet}.pdf` : 'https://kredato.com/assets/pdf/';
+    const pdfUrl = magnet
+      ? `https://kredato.com/assets/pdf/${encodeURIComponent(magnet)}.pdf`
+      : '';
     const brand = domainLabel === 'myfinq.xyz' ? 'myfinq.xyz' : 'kredato.com';
     const subject = `Добро пожаловать в Kredato — вот ваш PDF`;
     const welcomeHtml = `<!DOCTYPE html>
@@ -72,9 +74,7 @@ export async function onRequestGet(context) {
     <h1 style="margin:0;font-size:22px">Готово — подписка подтверждена</h1>
   </div>
   <p>Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
-  <p><strong>Ваш PDF-магнит:</strong><br>
-    <a href="${pdfUrl}" style="color:#2563eb;text-decoration:none">${magnet || 'Скачать файл'}</a>
-  </p>
+  ${pdfUrl ? `<p><strong>Ваш PDF-магнит:</strong><br><a href="${pdfUrl}" style="color:#2563eb;text-decoration:none">Скачать файл</a></p>` : ''}
   <p style="font-size:13px;color:#6b7280">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
   <p style="font-size:12px;color:#9ca3af">${brand} · Отписаться в один клик — в каждом письме.</p>

@@ -198,8 +198,8 @@ async function sendVia(apiKey, from, email, subject, html) {
 function doiTemplate(email, magnet, domainLabel) {
   const confirmUrl = `https://kredato.com/api/confirm?email=${encodeURIComponent(email)}&magnet=${encodeURIComponent(magnet)}`;
   const pdfUrl = magnet
-    ? `https://kredato.com/assets/pdf/${magnet}.pdf`
-    : 'https://kredato.com/assets/pdf/';
+    ? `https://kredato.com/assets/pdf/${encodeURIComponent(magnet)}.pdf`
+    : '';
   const brand = domainLabel === 'myfinq.xyz' ? 'myfinq.xyz' : 'kredato.com';
   return `<!DOCTYPE html>
 <html lang="ru">
