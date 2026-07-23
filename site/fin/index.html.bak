@@ -122,8 +122,6 @@
           <label for="consent-fin">Согласие на рассылку ИМЕННО по финансам + обработку ПДн (<a href="../privacy.html">152-ФЗ</a>). Double opt-in обязателен.</label>
         </div>
         <button type="submit" class="btn block">Подписаться</button>
-        <div class="form-success" style="display:none;margin-top:10px"></div>
-
       </form>
     </div>
   </div>

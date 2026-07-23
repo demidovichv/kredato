@@ -29,18 +29,20 @@
     <div id="s-confirm" class="state is-active">
       <span class="tag green">Double opt-in</span>
       <h1>Почти готово!</h1>
-      <p class="lead">Мы отправили письмо с подтверждением на указанный email. Перейди по ссылке в письме, чтобы активировать подписку.</p>
-      <p class="muted">Не пришло письмо? Проверь папку «Спам» или напиши нам ответом.</p>
+      <p class="lead">Мы отправили письмо с подтверждением на указанный email. Перейдите по ссылке в письме, чтобы активировать подписку.</p>
+      <p class="muted">Не пришло письмо? Проверьте папку «Спам» или напишите нам ответом.</p>
     </div>
 
     <div id="s-done" class="state">
       <span class="tag green">Готово</span>
       <h1>Подписка подтверждена</h1>
       <p class="lead">Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
-      <p><strong>Ваш PDF-магнит:</strong><br>
-        <a id="pdf-link" href="/assets/pdf/" style="color:#2563eb;text-decoration:none">Скачать файл</a>
-      </p>
-      <p class="muted">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
+      <div id="pdf-block" style="display:none">
+        <p><strong>Ваш PDF-магнит:</strong><br>
+          <a id="pdf-link" href="/assets/pdf/" style="color:#2563eb;text-decoration:none">Скачать файл</a>
+        </p>
+        <p class="muted">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
+      </div>
       <div class="hero-actions">
         <a href="/" class="btn alt">На главную</a>
       </div>
@@ -69,12 +71,16 @@
     var confirmed = Boolean(email);
     var confirmEl = document.getElementById('s-confirm');
     var doneEl = document.getElementById('s-done');
+    var pdfBlock = document.getElementById('pdf-block');
     var linkEl = document.getElementById('pdf-link');
     if (confirmEl) confirmEl.classList.toggle('is-active', !confirmed);
     if (doneEl) doneEl.classList.toggle('is-active', confirmed);
-    if (linkEl && magnet) {
+    if (pdfBlock && linkEl && magnet) {
+      pdfBlock.style.display = '';
       linkEl.href = '/assets/pdf/' + encodeURIComponent(magnet) + '.pdf';
       linkEl.textContent = magnet;
+    } else if (pdfBlock) {
+      pdfBlock.style.display = 'none';
     }
   } catch (e) {}
 })();
