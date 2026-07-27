@@ -198,9 +198,9 @@ function renderConfirmed(email, magnet, domainLabel, mailSent) {
 (function(){
   try {
     var params = new URLSearchParams(window.location.search);
-    var email = params.get('confirmed');
+    var email = params.get('email');
     var magnet = params.get('magnet');
-    var confirmed = Boolean(email);
+    var confirmed = Boolean(email && email.includes('@'));
     var confirmEl = document.getElementById('s-confirm');
     var doneEl = document.getElementById('s-done');
     var pdfBlock = document.getElementById('pdf-block');
