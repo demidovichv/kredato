@@ -22,8 +22,6 @@ UA = (
 )
 HEADERS = {"User-Agent": UA, "Accept": "text/html,application/xhtml+xml"}
 
-CBR_XML = "https://www.cbr.ru/scripts/XML_dynamic.asp?date_req1=&date_req2=&VAL_NUM_RY=92536d"  # placeholder fallback unused
-
 
 def fetch(url: str) -> str | None:
     try:
@@ -46,31 +44,17 @@ def parse_range(text: str) -> str | None:
     return None
 
 
-DEFAULT_RATES = {
-    "deposits": {"parsed": "12.5–13.6%"},
-    "mortgage": {"parsed": "11.9–17%"},
-    "loans": {"parsed": "25.8–31.8%"},
-}
-
-DEFAULT_PERIODS = {
-    "6m": {"deposits": "12.5–13.6%", "mortgage": "11.9–17%", "loans": "25.8–31.8%"},
-    "1y": {"deposits": "12.5–13.6%", "mortgage": "11.5–16.5%", "loans": "25.0–31.0%"},
-    "3y": {"deposits": "12.5–13.6%", "mortgage": "11.0–16.0%", "loans": "24.5–30.5%"},
-}
-
-
-def bankiru_rates() -> dict[str, dict[str, str]]:
+def bankiru_rates() -> dict[str, dict[str, str | None]]:
     urls = {
         "deposits": "https://www.banki.ru/products/deposits/",
         "mortgage": "https://www.banki.ru/products/mortgage/",
         "loans": "https://www.banki.ru/products/credits/cash/",
     }
-    out: dict[str, dict[str, str]] = {}
+    out: dict[str, dict[str, str | None]] = {}
     for key, url in urls.items():
         text = fetch(url)
-        out[key] = {}
+        out[key] = {"parsed": None, "sample_title": ""}
         if not text:
-            out[key] = DEFAULT_RATES[key]
             continue
         soup = BeautifulSoup(text, "lxml")
         card = soup.select_one(".page-title") or soup.select_one("h1")
@@ -81,7 +65,7 @@ def bankiru_rates() -> dict[str, dict[str, str]]:
             vals.append(c.get_text(" ", strip=True))
         text_block = " ".join(vals[:20])
         parsed = parse_range(text_block)
-        out[key] = {"parsed": parsed or "—", "sample_title": title[:120]}
+        out[key] = {"parsed": parsed, "sample_title": title[:120]}
     return out
 
 
