@@ -65,4 +65,3 @@
 # /subscribe/confirmed -> /subscribe/confirmed/index.html
 /subscribe.html   /subscribe.html/   308
 /subscribe.html/*   /subscribe.html/:splat   200
-/subscribe/confirmed   /subscribe/confirmed/   308
