@@ -83,25 +83,30 @@ export async function onRequestGet(context) {
       };
 
       if (pdfName) {
-        const fs = require('fs');
-        const path = require('path');
-        const candidates = [
-          path.join(process.cwd(), 'site', 'assets', 'pdf', pdfName),
-          path.join(process.cwd(), 'public', 'assets', 'pdf', pdfName),
-        ];
-        let pdfPath: string | null = null;
-        for (const candidate of candidates) {
-          if (fs.existsSync(candidate)) {
-            pdfPath = candidate;
-            break;
+        let pdfBuffer: Buffer | null = null;
+        let pdfFilename = pdfName;
+        try {
+          const fs = require('fs');
+          const path = require('path');
+          const candidates = [
+            path.join(process.cwd(), 'site', 'assets', 'pdf', pdfName),
+            path.join('/assets', 'pdf', pdfName),
+            pdfName,
+          ];
+          for (const candidate of candidates) {
+            if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+              pdfBuffer = fs.readFileSync(candidate);
+              break;
+            }
           }
+        } catch {
+          pdfBuffer = null;
         }
-        if (pdfPath) {
-          const buf = fs.readFileSync(pdfPath);
+        if (pdfBuffer) {
           payload.attachments = [
             {
-              filename: pdfName,
-              content: buf.toString('base64'),
+              filename: pdfFilename,
+              content: pdfBuffer.toString('base64'),
             },
           ];
         }
@@ -128,7 +133,6 @@ export async function onRequestGet(context) {
 }
 
 function renderConfirmed(email, magnet, domainLabel, mailSent) {
-  const origin = 'https://kredato.com';
   const pdfHref = magnet ? `/assets/pdf/${encodeURIComponent(magnet)}.pdf` : '/assets/pdf/';
   const html = `<!DOCTYPE html>
 <html lang="ru">
@@ -136,17 +140,26 @@ function renderConfirmed(email, magnet, domainLabel, mailSent) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Подписка подтверждена — Kredato</title>
-<link rel="stylesheet" href="/assets/css/style.css?v=3">
-<meta name="robots" content="noindex, nofollow">
-<script src="/assets/js/analytics.js" defer></script>
-<script src="/assets/js/consent.js" defer></script>
 <style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line-height:1.5}
+.site{max-width:1100px;margin:0 auto;padding:16px}
+.logo{font-size:20px;color:#0f172a}
+.logo span{color:#2563eb}
+.hero{padding:24px 0}
+.hero-compact .wrap{max-width:560px;margin:0 auto}
+.tag{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid #0f172a;color:#0f172a;font-size:12px;margin-bottom:10px}
+.tag.green{background:#0f172a;color:#fff;border-color:#0f172a}
 .state{display:none}
 .state.is-active{display:block}
-.card{max-width:560px;margin:0 auto;padding:24px}
-.lead{color:#374151}
+.lead{color:#374151;font-size:16px}
 .muted{color:#6b7280;font-size:14px}
+.btn{display:inline-block;padding:12px 24px;border-radius:8px;background:#16a34a;color:#fff;text-decoration:none;font-weight:600;margin-top:12px}
+.btn.alt{background:#e5e7eb;color:#0f172a}
+.footer{max-width:1100px;margin:0 auto;padding:24px 16px;color:#6b7280;font-size:13px}
 </style>
+<script src="/assets/js/analytics.js" defer></script>
+<script src="/assets/js/consent.js" defer></script>
 </head>
 <body>
 <header class="site">
@@ -156,7 +169,7 @@ function renderConfirmed(email, magnet, domainLabel, mailSent) {
   </div>
 </header>
 
-<section class="hero compact">
+<section class="hero hero-compact">
   <div class="wrap">
     <div id="s-confirm" class="state is-active">
       <span class="tag green">Double opt-in</span>
@@ -182,17 +195,10 @@ function renderConfirmed(email, magnet, domainLabel, mailSent) {
   </div>
 </section>
 
-<footer class="site">
-  <div class="wrap">
-    <div class="notice advertiser">
-      <p>Мы зарабатываем, когда вы оформляете продукт по нашей ссылке — комиссию платит нам провайдер, вам условия не ухудшаются. А факты в разборе берём из открытых данных банков и ЦБ, а не от рекламодателей.</p>
-    </div>
-    <div class="disclaimer">
-      <p>© 2026 Kredato. Материалы носят информационный характер и <strong>не являются финансовой рекомендацией</strong>.</p>
-      <p><a href="/">На главную</a> · <a href="/privacy.html">Политика ПДн</a></p>
-    </div>
-  </div>
-</footer>
+<div class="footer">
+  <p>© 2026 Kredato. Материалы носят информационный характер и <strong>не являются финансовой рекомендацией</strong>.</p>
+  <p><a href="/">На главную</a> · <a href="/privacy.html">Политика ПДн</a></p>
+</div>
 
 <script>
 (function(){
