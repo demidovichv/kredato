@@ -35,36 +35,32 @@ export async function onRequestGet(context) {
       domainLabel = 'myfinq.xyz';
     }
 
-    if (!apiKey) {
-      // No mail config — just render confirmation page inline
-      return renderConfirmed(email, magnet, domainLabel, false);
-    }
+    let mailSent = false;
+    if (apiKey) {
+      const audienceId = env.RESEND_AUDIENCE_ID || '';
+      if (audienceId) {
+        await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            first_name: '',
+            last_name: '',
+            custom_properties: { confirmed_at: new Date().toISOString(), magnet, domain: domainLabel },
+          }),
+        }).catch(() => {});
+      }
 
-    // Best-effort: mark as confirmed in Resend audience
-    const audienceId = env.RESEND_AUDIENCE_ID || '';
-    if (audienceId) {
-      await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          first_name: '',
-          last_name: '',
-          custom_properties: { confirmed_at: new Date().toISOString(), magnet, domain: domainLabel },
-        }),
-      }).catch(() => {});
-    }
+      const brand = domainLabel === 'myfinq.xyz' ? 'myfinq.xyz' : 'kredato.com';
+      const pdfName = magnet ? `${magnet}.pdf` : '';
+      const origin = new URL(request.url).origin;
+      const pdfUrl = pdfName ? `${origin}/assets/pdf/${encodeURIComponent(pdfName)}` : '';
 
-    // Welcome email + PDF
-    const brand = domainLabel === 'myfinq.xyz' ? 'myfinq.xyz' : 'kredato.com';
-    const pdfUrl = magnet
-      ? `${new URL(request.url).origin}/assets/pdf/${encodeURIComponent(magnet)}.pdf`
-      : '';
-    const subject = 'Добро пожаловать в Kredato — вот ваш PDF';
-    const welcomeHtml = `<!DOCTYPE html>
+      const subject = 'Добро пожаловать в Kredato — вот ваш PDF';
+      const welcomeHtml = `<!DOCTYPE html>
 <html lang="ru">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1f2937">
@@ -79,21 +75,50 @@ export async function onRequestGet(context) {
 </body>
 </html>`;
 
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+      const payload: Record<string, unknown> = {
         from,
         to: [email],
         subject,
         html: welcomeHtml,
-      }),
-    }).catch(() => {});
+      };
 
-    return renderConfirmed(email, magnet, domainLabel, true);
+      if (pdfName) {
+        const fs = require('fs');
+        const path = require('path');
+        const candidates = [
+          path.join(process.cwd(), 'site', 'assets', 'pdf', pdfName),
+          path.join(process.cwd(), 'public', 'assets', 'pdf', pdfName),
+        ];
+        let pdfPath: string | null = null;
+        for (const candidate of candidates) {
+          if (fs.existsSync(candidate)) {
+            pdfPath = candidate;
+            break;
+          }
+        }
+        if (pdfPath) {
+          const buf = fs.readFileSync(pdfPath);
+          payload.attachments = [
+            {
+              filename: pdfName,
+              content: buf.toString('base64'),
+            },
+          ];
+        }
+      }
+
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+      mailSent = true;
+    }
+
+    return renderConfirmed(email, magnet, domainLabel, mailSent);
   } catch (err) {
     return new Response(JSON.stringify({ status: 'worker_error', detail: String(err) }), {
       status: 500,
@@ -104,7 +129,7 @@ export async function onRequestGet(context) {
 
 function renderConfirmed(email, magnet, domainLabel, mailSent) {
   const origin = 'https://kredato.com';
-  const pdfUrl = magnet ? `${origin}/assets/pdf/${encodeURIComponent(magnet)}.pdf` : '';
+  const pdfHref = magnet ? `/assets/pdf/${encodeURIComponent(magnet)}.pdf` : '/assets/pdf/';
   const html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -146,7 +171,7 @@ function renderConfirmed(email, magnet, domainLabel, mailSent) {
       <p class="lead">Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
       <div id="pdf-block" style="display:none">
         <p><strong>Ваш PDF-магнит:</strong><br>
-          <a id="pdf-link" href="/assets/pdf/" style="color:#2563eb;text-decoration:none">Скачать файл</a>
+          <a id="pdf-link" href="${pdfHref}" style="color:#2563eb;text-decoration:none">Скачать файл</a>
         </p>
         <p class="muted">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
       </div>
