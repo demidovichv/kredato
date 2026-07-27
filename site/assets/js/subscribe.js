@@ -28,29 +28,43 @@
   }
 
   function bindForm(form) {
+    var successEl = form.querySelector('.form-success');
+    if (!successEl) {
+      var btn = form.querySelector('button[type="submit"]');
+      successEl = document.createElement('div');
+      successEl.className = 'form-success';
+      successEl.style.display = 'none';
+      successEl.style.marginTop = '10px';
+      if (btn && btn.parentNode) {
+        btn.parentNode.insertBefore(successEl, btn.nextSibling);
+      } else {
+        form.appendChild(successEl);
+      }
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var email = (form.querySelector('input[name="email"]') || {}).value || '';
       var consent = (form.querySelector('input[name="consent"]') || {}).checked;
 
       if (!email || !email.includes('@')) {
-        var bad = form.querySelector('.form-success');
-        if (bad) { bad.textContent = 'Укажите корректный email и согласие на рассылку.'; bad.style.display = 'block'; }
+        successEl.textContent = 'Укажите корректный email и согласие на рассылку.';
+        successEl.style.display = 'block';
         return;
       }
 
       var source = (form.querySelector('input[name="vertical"]:checked') || {}).value || resolveSource();
       var magnet = resolveMagnet();
-      var successEl = form.querySelector('.form-success');
       var btn = form.querySelector('button[type="submit"]');
 
       if (!consent) {
-        if (successEl) { successEl.textContent = 'Нужно согласие на рассылку.'; successEl.style.display = 'block'; }
+        successEl.textContent = 'Нужно согласие на рассылку.';
+        successEl.style.display = 'block';
         return;
       }
 
       if (btn) { btn.disabled = true; btn.textContent = 'Отправка…'; }
-      if (successEl) { successEl.style.display = 'none'; }
+      successEl.style.display = 'none';
 
       fetch(API_SUBSCRIBE, {
         method: 'POST',
@@ -65,10 +79,12 @@
         if (data.status === 'worker_error') msg = 'Серверная ошибка: ' + (data.detail || 'попробуйте через минуту');
         if (data.status === 'resend_error') msg = 'Ошибка отправки на почту. Если повторится — напишите нам.';
         if (data.status === 'error') msg = 'Ошибка: ' + (data.detail || 'проверьте форму');
-        if (successEl) { successEl.textContent = '✅ ' + msg; successEl.style.display = 'block'; }
+        successEl.textContent = '✅ ' + msg;
+        successEl.style.display = 'block';
       })
       .catch(function () {
-        if (successEl) { successEl.textContent = 'Ошибка соединения. Попробуйте ещё раз.'; successEl.style.display = 'block'; }
+        successEl.textContent = 'Ошибка соединения. Попробуйте ещё раз.';
+        successEl.style.display = 'block';
       })
       .finally(function () {
         if (btn) { btn.disabled = false; btn.textContent = 'Подписаться'; }

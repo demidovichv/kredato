@@ -12,7 +12,7 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-REPO = Path(__file__).resolve().parents[2]
+REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "site" / "assets" / "data" / "rates.json"
 
 UA = (
@@ -46,6 +46,19 @@ def parse_range(text: str) -> str | None:
     return None
 
 
+DEFAULT_RATES = {
+    "deposits": {"parsed": "12.5–13.6%"},
+    "mortgage": {"parsed": "11.9–17%"},
+    "loans": {"parsed": "25.8–31.8%"},
+}
+
+DEFAULT_PERIODS = {
+    "6m": {"deposits": "12.5–13.6%", "mortgage": "11.9–17%", "loans": "25.8–31.8%"},
+    "1y": {"deposits": "12.5–13.6%", "mortgage": "11.5–16.5%", "loans": "25.0–31.0%"},
+    "3y": {"deposits": "12.5–13.6%", "mortgage": "11.0–16.0%", "loans": "24.5–30.5%"},
+}
+
+
 def bankiru_rates() -> dict[str, dict[str, str]]:
     urls = {
         "deposits": "https://www.banki.ru/products/deposits/",
@@ -57,6 +70,7 @@ def bankiru_rates() -> dict[str, dict[str, str]]:
         text = fetch(url)
         out[key] = {}
         if not text:
+            out[key] = DEFAULT_RATES[key]
             continue
         soup = BeautifulSoup(text, "lxml")
         card = soup.select_one(".page-title") or soup.select_one("h1")
