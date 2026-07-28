@@ -83,21 +83,12 @@ export async function onRequestGet(context) {
       };
 
       if (pdfName) {
-        let pdfBuffer: Buffer | null = null;
+        let pdfBuffer: Buffer | ArrayBuffer | null = null;
         let pdfFilename = pdfName;
         try {
-          const fs = require('fs');
-          const path = require('path');
-          const candidates = [
-            path.join(process.cwd(), 'site', 'assets', 'pdf', pdfName),
-            path.join('/assets', 'pdf', pdfName),
-            pdfName,
-          ];
-          for (const candidate of candidates) {
-            if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
-              pdfBuffer = fs.readFileSync(candidate);
-              break;
-            }
+          const pdfRes = await fetch(`${origin}/assets/pdf/${encodeURIComponent(pdfName)}`);
+          if (pdfRes.ok) {
+            pdfBuffer = await pdfRes.arrayBuffer();
           }
         } catch {
           pdfBuffer = null;
@@ -106,7 +97,7 @@ export async function onRequestGet(context) {
           payload.attachments = [
             {
               filename: pdfFilename,
-              content: pdfBuffer.toString('base64'),
+              content: Buffer.from(pdfBuffer).toString('base64'),
             },
           ];
         }
