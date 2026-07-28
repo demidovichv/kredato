@@ -9,8 +9,6 @@ on:
 jobs:
   update-rates:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout repository
         env:
@@ -32,14 +30,27 @@ jobs:
           cd repo
           python scripts/update_rates.py
           
-      - name: Commit rates
+      - name: Commit and push rates
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           cd repo
           git config user.name "kredato-bot"
           git config user.email "bot@kredato.com"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          
+          PUSH_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if [ -n "$PAT_TOKEN" ]; then
+            PUSH_URL="https://x-access-token:${PAT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          fi
+          
+          git remote set-url origin "$PUSH_URL"
           git add site/assets/data/rates.json
-          git diff --cached --quiet || git commit -m "chore: update rates $(date +%Y-%m-%d)"
+          
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          git commit -m "chore: update rates $(date +%Y-%m-%d)"
           git push
