@@ -71,7 +71,7 @@ export async function onRequestPost(context) {
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${apiKey}`,
+            `Authorization: Bearer ${apiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -93,7 +93,7 @@ export async function onRequestPost(context) {
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        `Authorization: Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -184,7 +184,7 @@ async function sendVia(apiKey, from, email, subject, html) {
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        `Authorization: Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ from, to: [email], subject, html }),

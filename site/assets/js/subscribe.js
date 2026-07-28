@@ -18,8 +18,11 @@
     return 'kredato';
   }
 
-  function resolveMagnet() {
-    var el = document.querySelector('[data-magnet]');
+  function resolveMagnet(form) {
+    var el = form && form.querySelector ? form.querySelector('[data-magnet]') : null;
+    if (!el) {
+      el = document.querySelector('[data-magnet]');
+    }
     return el ? String(el.getAttribute('data-magnet') || '').trim() : '';
   }
 
@@ -54,7 +57,7 @@
       }
 
       var source = (form.querySelector('input[name="vertical"]:checked') || {}).value || resolveSource();
-      var magnet = resolveMagnet();
+      var magnet = resolveMagnet(form);
       var btn = form.querySelector('button[type="submit"]');
 
       if (!consent) {
