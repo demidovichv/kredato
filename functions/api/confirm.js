@@ -124,13 +124,21 @@ export async function onRequestGet(context) {
 }
 
 function renderConfirmed(email, magnet, domainLabel, mailSent) {
-  const pdfHref = magnet ? `/assets/pdf/${encodeURIComponent(magnet)}.pdf` : '/assets/pdf/';
+  const pdfHref = magnet
+    ? `/assets/pdf/${encodeURIComponent(magnet)}.pdf`
+    : '/assets/pdf/';
+  const confirmed = Boolean(email && String(email).includes('@'));
+  const state = confirmed ? 's-done' : 's-confirm';
   const html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Подписка подтверждена — Kredato</title>
+<title>${
+  confirmed
+    ? 'Подписка подтверждена — Kredato'
+    : 'Подписка почти готова — Kredato'
+}</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line-height:1.5}
@@ -162,18 +170,24 @@ body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line
 
 <section class="hero hero-compact">
   <div class="wrap">
-    <div id="s-confirm" class="state is-active">
+    <div id="s-confirm" class="state${
+      confirmed ? '' : ' is-active'
+    }">
       <span class="tag green">Double opt-in</span>
       <h1>Почти готово!</h1>
       <p class="lead">Мы отправили письмо с подтверждением на указанный email. Перейдите по ссылке в письме, чтобы активировать подписку.</p>
       <p class="muted">Не пришло письмо? Проверьте папку «Спам» или напишите нам ответом.</p>
     </div>
 
-    <div id="s-done" class="state">
+    <div id="s-done" class="state${
+      confirmed ? ' is-active' : ''
+    }">
       <span class="tag green">Готово</span>
       <h1>Подписка подтверждена</h1>
       <p class="lead">Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
-      <div id="pdf-block" style="display:none">
+      <div id="pdf-block" style="${
+        confirmed && magnet ? '' : 'display:none'
+      }">
         <p><strong>Ваш PDF-магнит:</strong><br>
           <a id="pdf-link" href="${pdfHref}" style="color:#2563eb;text-decoration:none">Скачать файл</a>
         </p>
@@ -195,9 +209,9 @@ body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line
 (function(){
   try {
     var params = new URLSearchParams(window.location.search);
-    var email = params.get('email');
-    var magnet = params.get('magnet');
-    var confirmed = Boolean(email && email.includes('@'));
+    var email = params.get('email') || '';
+    var magnet = params.get('magnet') || '';
+    confirmed = Boolean(email && email.includes('@'));
     var confirmEl = document.getElementById('s-confirm');
     var doneEl = document.getElementById('s-done');
     var pdfBlock = document.getElementById('pdf-block');
