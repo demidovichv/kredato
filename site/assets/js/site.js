@@ -76,18 +76,17 @@
         introEl.textContent = 'Ставки на ' + (dateStr || 'сегодня') + ' (по открытым данным)';
       }
       var map = { 'Вклады': 'deposits', 'Ипотека': 'mortgage', 'Кредиты': 'loans' };
-      panels.forEach(function (panel) {
-        var label = panel.querySelector('.row span');
-        var val = panel.querySelector('.row .val');
+      var panel = ticker.querySelector('.panel[data-panel="' + period + '"]');
+      if (!panel) panel = ticker.querySelector('.panel');
+      var rows = panel ? panel.querySelectorAll('.row') : [];
+      rows.forEach(function (row) {
+        var label = row.querySelector('span');
+        var val = row.querySelector('.val');
         var key = label ? map[label.textContent.trim()] : '';
         if (!key) return;
-        if (val && p[key]) {
-          val.textContent = p[key];
-        }
+        if (val && p[key]) val.textContent = p[key];
       });
-      if (captionEl && data.caption) {
-        captionEl.textContent = data.caption;
-      }
+      if (captionEl && data.caption) captionEl.textContent = data.caption;
     }
     try {
       fetch('assets/data/rates.json?' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (data) {

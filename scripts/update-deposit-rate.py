@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Проверяет текущую дату: если она больше last_synced → обновляет ставки по вкладам
-с banki.ru/products/deposits/ и делает коммит+пуш в master.
+"""Обновляет открытые ставки с banki.ru в site/assets/data/rates.json
+и актуализирует дату/подпись в site/index.html.
+Запуск: python scripts/update-deposit-rate.py
 """
+import json
 import re
 import subprocess
 import sys
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 try:
@@ -17,46 +19,40 @@ except ImportError as e:
 
 REPO = Path(__file__).resolve().parents[1]
 INDEX = REPO / "site" / "index.html"
-URL = "https://www.banki.ru/products/deposits/"
-MARKER_FILE = REPO / ".last_rate_sync"
+RATES = REPO / "site" / "assets" / "data" / "rates.json"
+URL_DEPOSITS = "https://www.banki.ru/products/deposits/"
+URL_MORTGAGE = "https://www.banki.ru/products/hypothec/"
+URL_LOANS = "https://www.banki.ru/products/consumer-credit/"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-re_tokens = re.compile(r"до\s+(\d{1,2},\d)\s*%")
 
 
-def extract_deposit_rates(text: str) -> tuple[float, float]:
+def extract_range(text: str) -> tuple[float, float]:
     vals = []
-
-    for m in re_tokens.finditer(text):
+    for m in re.finditer(r"(\d{1,2}[,.]\d)\s*%", text):
         try:
             n = float(m.group(1).replace(",", "."))
-            if 3.0 <= n <= 20.0:
+            if 3.0 <= n <= 35.0:
                 vals.append(n)
         except ValueError:
             pass
-
-    if len(vals) < 2:
-        for m in re.finditer(r"(\d{1,2},?\d)\s*%", text):
-            try:
-                n = float(m.group(1).replace(",", "."))
-                if 3.0 <= n <= 20.0:
-                    vals.append(n)
-            except ValueError:
-                pass
-
     vals = sorted(set(vals))
     if len(vals) < 2:
         raise RuntimeError(f"Insufficient rate data extracted: {vals}")
     return round(min(vals), 1), round(max(vals), 1)
 
 
-def fetch_rates() -> tuple[float, float]:
-    print(f"Fetching {URL} ...")
-    r = requests.get(URL, headers=HEADERS, timeout=30)
+def fetch_page(url: str) -> str:
+    r = requests.get(url, headers=HEADERS, timeout=30)
     r.raise_for_status()
-    soup = BeautifulSoup(r.text, "lxml")
-    text = soup.get_text(" ", strip=True)
-    lo, hi = extract_deposit_rates(text)
-    print(f"Extracted deposit rates: {lo}% – {hi}%")
+    return r.text
+
+
+def fetch_rates(url: str, label: str) -> tuple[float, float]:
+    print(f"Fetching {label}: {url}")
+    html = fetch_page(url)
+    text = BeautifulSoup(html, "lxml").get_text(" ", strip=True)
+    lo, hi = extract_range(text)
+    print(f"  -> {lo}% – {hi}%")
     return lo, hi
 
 
@@ -64,62 +60,70 @@ def fmt(n: float) -> str:
     return f"{n:.1f}".replace(".", ",")
 
 
-def patch_index(lo: float, hi: float, on_date: str) -> tuple[str, str]:
-    html = INDEX.read_text(encoding="utf-8")
-    lo_s, hi_s = fmt(lo), fmt(hi)
+def write_rates_json(deposits: tuple[float, float], mortgage: tuple[float, float], loans: tuple[float, float]):
+    today_str = date.today().strftime("%d.%m.%Y")
+    data = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "periods": {
+            "6m": {
+                "deposits": f"{fmt(deposits[0])}–{fmt(deposits[1])}%",
+                "mortgage": f"{fmt(mortgage[0])}–{fmt(mortgage[1])}%",
+                "loans": f"{fmt(loans[0])}–{fmt(loans[1])}%",
+            },
+            "1y": {
+                "deposits": f"{fmt(deposits[0])}–{fmt(deposits[1])}%",
+                "mortgage": f"{fmt(mortgage[0])}–{fmt(mortgage[1])}%",
+                "loans": f"{fmt(loans[0])}–{fmt(loans[1])}%",
+            },
+            "3y": {
+                "deposits": f"{fmt(deposits[0])}–{fmt(deposits[1])}%",
+                "mortgage": f"{fmt(mortgage[0])}–{fmt(mortgage[1])}%",
+                "loans": f"{fmt(loans[0])}–{fmt(loans[1])}%",
+            },
+        },
+        "caption": f"Диапазоны — ориентир по открытым данным банков и ЦБ на {today_str}. Не является индивидуальной рекомендацией.",
+        "debug_source": "bankiru",
+    }
+    RATES.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"Updated {RATES}")
 
-    # 1) заголовок
+
+def patch_index(deposits: tuple[float, float], on_date: str):
+    html = INDEX.read_text(encoding="utf-8")
     html = re.sub(
         r'(<h3>Ставки на )\d{2}\.\d{2}\.\d{4}( \(по открытым данным\)</h3>)',
         rf"\g<1>{on_date}\g<2>",
         html,
     )
-
+    # Обновляем только первый блок rates-ticker, остальные трогать не нужно
     html = re.sub(
         r'(<span>Вклады</span><span class="val">)[\d,\.]+–[\d,\.]+%(</span></div>\s*<div class="row"><span>Ипотека</span>)',
-        lambda m, lo=lo_s, hi=hi_s: f"{m.group(1)}{lo}–{hi}%{m.group(2)}",
+        lambda m, lo=fmt(deposits[0]), hi=fmt(deposits[1]): f"{m.group(1)}{lo}–{hi}%{m.group(2)}",
         html,
         count=1,
     )
-
-    # 3) calc-note
     html = re.sub(
         r'(Пример: на )\d{2}\.\d{2}\.\d{4}( средняя ставка по вкладам )\d{1,2},\d%',
-        rf"Пример: на {on_date} средняя ставка по вкладам {lo_s}%",
+        rf"Пример: на {on_date} средняя ставка по вкладам {fmt(deposits[0])}%",
         html,
     )
-
-    # 4) bottom caption
     html = re.sub(
         r'(Диапазоны — ориентир по открытым данным банков и ЦБ на )\d{2}\.\d{2}\.\d{4}',
         rf"\g<1>{on_date}",
         html,
     )
-
     INDEX.write_text(html, encoding="utf-8")
-    return lo_s, hi_s
-
-
-def git_commit_push(msg: str):
-    for c in [
-        ["git", "add", str(INDEX)],
-        ["git", "commit", "-m", msg],
-        ["git", "push", "origin", "master"],
-    ]:
-        p = subprocess.run(c, cwd=REPO, check=True, text=True, capture_output=True)
-        print(" ".join(c), p.stdout.strip())
+    print(f"Patched {INDEX}")
 
 
 def main():
     today_str = date.today().strftime("%d.%m.%Y")
-    if MARKER_FILE.exists() and MARKER_FILE.read_text(encoding="utf-8").strip() == today_str:
-        print(f"Already synced today ({today_str}), skip.")
-        return 0
-
-    lo, hi = fetch_rates()
-    patch_index(lo, hi, today_str)
-    git_commit_push(f"chore: ставки по вкладам {fmt(lo)}–{fmt(hi)}% на {today_str} (banki.ru)")
-    print(f"Done. Synced to {today_str}")
+    deposits = fetch_rates(URL_DEPOSITS, "deposits")
+    mortgage = fetch_rates(URL_MORTGAGE, "mortgage")
+    loans = fetch_rates(URL_LOANS, "loans")
+    write_rates_json(deposits, mortgage, loans)
+    patch_index(deposits, today_str)
+    print("Done.")
     return 0
 
 
