@@ -19,11 +19,26 @@
   }
 
   function resolveMagnet(form) {
-    var el = form && form.querySelector ? form.querySelector('[data-magnet]') : null;
-    if (!el) {
-      el = document.querySelector('[data-magnet]');
+    var magnet = '';
+    if (form && form.hasAttribute && form.hasAttribute('data-magnet')) {
+      magnet = String(form.getAttribute('data-magnet') || '').trim();
     }
-    return el ? String(el.getAttribute('data-magnet') || '').trim() : '';
+    if (!magnet) {
+      var el = form && form.querySelector ? form.querySelector('[data-magnet]') : null;
+      if (!el) {
+        el = document.querySelector('[data-magnet]');
+      }
+      if (el) {
+        magnet = String(el.getAttribute('data-magnet') || '').trim();
+      }
+    }
+    if (!magnet) {
+      var hidden = form && form.querySelector ? form.querySelector('input[name="magnet"]') : null;
+      if (hidden) {
+        magnet = String(hidden.value || '').trim();
+      }
+    }
+    return magnet;
   }
 
   function slots() {
