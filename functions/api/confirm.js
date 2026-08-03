@@ -75,7 +75,7 @@ export async function onRequestGet(context) {
 </body>
 </html>`;
 
-      const payload: Record<string, unknown> = {
+      const payload = {
         from,
         to: [email],
         subject,
@@ -83,7 +83,7 @@ export async function onRequestGet(context) {
       };
 
       if (pdfName) {
-        let pdfBuffer: Buffer | ArrayBuffer | null = null;
+        let pdfBuffer = null;
         let pdfFilename = pdfName;
         try {
           const pdfRes = await fetch(`${origin}/assets/pdf/${encodeURIComponent(pdfName)}`);
