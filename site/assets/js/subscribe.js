@@ -72,7 +72,7 @@
       }
 
       var source = (form.querySelector('input[name="vertical"]:checked') || {}).value || resolveSource();
-      var magnet = resolveMagnet(form);
+      var magnet = resolveMagnet(form) || 'magnet-3-deposits-rates';
       var btn = form.querySelector('button[type="submit"]');
 
       if (!consent) {
