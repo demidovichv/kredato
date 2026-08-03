@@ -23,7 +23,7 @@ export async function onRequestPost(context) {
     const body = await request.json().catch(() => ({}));
     const email = String(body.email || '').trim();
     const source = String(body.source || '').trim() || 'unknown';
-    const magnet = String(body.magnet || '').trim() || '';
+    const magnet = String(body.magnet || '').trim() || 'magnet-3-deposits-rates';
 
     if (!email || !email.includes('@')) {
       return json(400, { error: 'email_required' });
