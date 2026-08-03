@@ -94,10 +94,13 @@ export async function onRequestGet(context) {
           pdfBuffer = null;
         }
         if (pdfBuffer) {
+          const bytes = new Uint8Array(pdfBuffer);
+          let binary = '';
+          for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
           payload.attachments = [
             {
               filename: pdfFilename,
-              content: Buffer.from(pdfBuffer).toString('base64'),
+              content: btoa(binary),
             },
           ];
         }
