@@ -6,7 +6,7 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const url = new URL(request.url);
   const email = String(url.searchParams.get('email') || '').trim();
-  const magnet = String(url.searchParams.get('magnet') || '').trim();
+  const magnet = String(url.searchParams.get('magnet') || '').trim() || 'magnet-3-deposits-rates';
 
   try {
     if (!email || !email.includes('@')) {
