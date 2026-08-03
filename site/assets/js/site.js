@@ -76,7 +76,7 @@
         introEl.textContent = 'Ставки на ' + (dateStr || 'сегодня') + ' (по открытым данным)';
       }
       var map = { 'Вклады': 'deposits', 'Ипотека': 'mortgage', 'Кредиты': 'loans' };
-      rows.forEach(function (panel) {
+      panels.forEach(function (panel) {
         var label = panel.querySelector('.row span');
         var val = panel.querySelector('.row .val');
         var key = label ? map[label.textContent.trim()] : '';

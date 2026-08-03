@@ -15,7 +15,7 @@ except ImportError as e:
     print(f"Missing dep: {e}. Run: pip install beautifulsoup4 requests")
     sys.exit(2)
 
-REPO = Path(r"F:\Email_Marketing_Repository")
+REPO = Path(__file__).resolve().parents[1]
 INDEX = REPO / "site" / "index.html"
 URL = "https://www.banki.ru/products/deposits/"
 MARKER_FILE = REPO / ".last_rate_sync"
