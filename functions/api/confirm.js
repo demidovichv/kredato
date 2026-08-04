@@ -143,23 +143,24 @@ function renderConfirmed(email, magnet, domainLabel, mailSent) {
 }</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line-height:1.5}
+body{margin:0;font-family:Arial,sans-serif;background:#0f1420;color:#e8ecf5;line-height:1.6}
 .site{max-width:1100px;margin:0 auto;padding:16px}
 .wrap{max-width:980px;margin:0 auto;padding:0 20px}
-.logo{font-size:20px;color:#0f172a}
-.logo span{color:#2563eb}
+.logo{font-size:20px;color:#e8ecf5}
+.logo span{color:#3d7bff}
 .hero{padding:24px 0}
 .hero-compact .wrap{max-width:560px;margin:0 auto}
 .hero-actions{margin-top:18px}
-.tag{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid #0f172a;color:#0f172a;font-size:12px;margin-bottom:10px}
-.tag.green{background:#0f172a;color:#fff;border-color:#0f172a}
+.tag{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid #e8ecf5;color:#e8ecf5;font-size:12px;margin-bottom:10px}
+.tag.green{background:#0f172a;color:#27c09a;border-color:#27c09a}
 .state{display:none}
 .state.is-active{display:block}
-.lead{color:#374151;font-size:16px}
-.muted{color:#6b7280;font-size:14px}
+.lead{color:#9aa6c0;font-size:16px}
+.muted{color:#9aa6c0;font-size:14px}
 .btn{display:inline-block;padding:12px 24px;border-radius:8px;background:#16a34a;color:#fff;text-decoration:none;font-weight:600;margin-top:12px}
-.btn.alt{background:#e5e7eb;color:#0f172a}
-.footer{max-width:1100px;margin:0 auto;padding:24px 16px;color:#6b7280;font-size:13px}
+.btn.alt{background:#1c2436;color:#e8ecf5;border:1px solid #2a3450}
+.footer{max-width:1100px;margin:0 auto;padding:24px 16px;color:#9aa6c0;font-size:13px}
+a{color:#3d7bff;text-decoration:none}
 </style>
 <script src="/assets/js/analytics.js" defer></script>
 <script src="/assets/js/consent.js" defer></script>
@@ -191,7 +192,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line
       <p class="lead">Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
       <div id="pdf-block" style="${confirmed && magnet ? '' : 'display:none'}">
         <p><strong>Ваш PDF-магнит:</strong><br>
-          <a id="pdf-link" href="${pdfHref}" style="color:#2563eb;text-decoration:none">Скачать файл</a>
+          <a id="pdf-link" href="${pdfHref}" style="display:inline-block;background:#16a34a;color:#ffffff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:8px">Скачать файл</a>
         </p>
         <p class="muted">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
       </div>
