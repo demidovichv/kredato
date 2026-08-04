@@ -68,8 +68,7 @@ export async function onRequestGet(context) {
     <h1 style="margin:0;font-size:22px">Готово — подписка подтверждена</h1>
   </div>
   <p>Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
-  ${pdfUrl ? `<p><strong>Ваш PDF-магнит:</strong><br><a href="${pdfUrl}" style="color:#2563eb;text-decoration:none">Скачать файл</a></p>` : ''}
-  <p style="font-size:13px;color:#6b7280">Если кнопка не открывается — скопируйте ссылку в браузер.</p>
+  ${mailSent && pdfUrl ? `<p><strong>Ваш PDF-магнит:</strong><br><a href="${pdfUrl}" style="display:inline-block;background:#16a34a;color:#ffffff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:12px">Скачать файл</a></p><p style="font-size:13px;color:#6b7280">Если кнопка не открывается — скопируйте ссылку в браузер.</p>` : ''}
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
   <p style="font-size:12px;color:#9ca3af">${brand} · Отписаться в один клик — в каждом письме.</p>
 </body>
@@ -146,10 +145,12 @@ function renderConfirmed(email, magnet, domainLabel, mailSent) {
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line-height:1.5}
 .site{max-width:1100px;margin:0 auto;padding:16px}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
 .logo{font-size:20px;color:#0f172a}
 .logo span{color:#2563eb}
 .hero{padding:24px 0}
 .hero-compact .wrap{max-width:560px;margin:0 auto}
+.hero-actions{margin-top:18px}
 .tag{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid #0f172a;color:#0f172a;font-size:12px;margin-bottom:10px}
 .tag.green{background:#0f172a;color:#fff;border-color:#0f172a}
 .state{display:none}
@@ -188,9 +189,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#111827;line
       <span class="tag green">Готово</span>
       <h1>Подписка подтверждена</h1>
       <p class="lead">Спасибо! Ваш email подтверждён. Теперь можно пользоваться рассылкой Kredato.</p>
-      <div id="pdf-block" style="${
-        confirmed && magnet ? '' : 'display:none'
-      }">
+      <div id="pdf-block" style="${confirmed && magnet ? '' : 'display:none'}">
         <p><strong>Ваш PDF-магнит:</strong><br>
           <a id="pdf-link" href="${pdfHref}" style="color:#2563eb;text-decoration:none">Скачать файл</a>
         </p>
