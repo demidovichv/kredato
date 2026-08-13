@@ -89,7 +89,7 @@
       if (captionEl && data.caption) captionEl.textContent = data.caption;
     }
     try {
-      fetch('assets/data/rates.json?' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (data) {
+      fetch('/assets/data/rates.json?' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (data) {
         applyPeriod(currentPeriod, data);
         buttons.forEach(function (btn) {
           btn.addEventListener('click', function () {
