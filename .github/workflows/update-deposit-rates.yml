@@ -48,5 +48,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: ставки по вкладам $(date +%Y-%m-%d) (banki.ru)"
+          git commit -m "chore: ставки по вкладам $(date +%Y-%m-%d) (cbr xlsx)"
           git push origin HEAD:master
