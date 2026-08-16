@@ -213,6 +213,7 @@ def patch_index(on_date: str) -> bool:
 
 def main() -> int:
     today_str = date.today().strftime("%d.%m.%Y")
+    today = date.today()
 
     deposits_bytes = fetch_xlsx(CBR_DEPOSITS)
     loans_bytes = fetch_xlsx(CBR_LOANS)
@@ -234,10 +235,31 @@ def main() -> int:
         "mortgage",
     )
 
-    if deposits_bytes and loans_bytes and mortgage_bytes:
-        write_status("cbr_xlsx")
+    source = "cbr_xlsx_fallback"
+    if deposits_bytes and loans_bytes:
+        source = "cbr_xlsx"
+        sheet_dates = []
+        for data in (deposits_bytes, loans_bytes, mortgage_bytes):
+            if not data:
+                continue
+            try:
+                from openpyxl import load_workbook
+                wb = load_workbook(BytesIO(data), data_only=True, read_only=True)
+                ws = wb.active or wb[wb.sheetnames[0]]
+                d = extract_sheet_date(ws)
+                if d:
+                    sheet_dates.append(d)
+            except Exception:
+                pass
+        if sheet_dates:
+            max_sheet_date = max(sheet_dates)
+            if (today - max_sheet_date).days > 3:
+                write_status(source, stale=True, error=f"max_sheet_date={max_sheet_date.isoformat()}")
+                print(f"Stale guard triggered: max_sheet_date={max_sheet_date}")
+                return 1
+        write_status(source)
     else:
-        write_status("cbr_xlsx_fallback", error="one or more upstream fetches failed")
+        write_status(source, error="one or more upstream fetches failed")
 
     write_rates_json(deposits, mortgage, loans)
     if not patch_index(today_str):
