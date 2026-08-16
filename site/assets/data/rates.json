@@ -1,5 +1,9 @@
 {
+
   "updated_at": "2026-08-16T06:39:24.383356+00:00",
+
+  "updated_at": "2026-08-15T18:42:49.866661+00:00",
+>>>>>>> ec06b60 (chore: preserve pending rates/index changes before pipeline hardening)
   "periods": {
     "6m": {
       "deposits": "11,6–13,3%",
@@ -17,6 +21,10 @@
       "loans": "16,5–31,2%"
     }
   },
+
   "caption": "Диапазоны — ориентир по открытым данным ЦБ и банков на 16.08.2026. Не является индивидуальной рекомендацией.",
+
+  "caption": "Диапазоны — ориентир по открытым данным ЦБ и банков на 15.08.2026. Не является индивидуальной рекомендацией.",
+>>>>>>> ec06b60 (chore: preserve pending rates/index changes before pipeline hardening)
   "debug_source": "cbr_xlsx"
 }
