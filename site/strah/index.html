@@ -156,7 +156,8 @@
     <div class="lead-form">
       <h2>Рассылка по страхованию</h2>
       <p class="note">Где дешевле и как не переплатить — строго с твоего согласия (double opt-in).</p>
-      <form action="/api/subscribe" method="POST" data-uni-form>          <input type="hidden" name="source" value="strah">
+      <form action="/api/subscribe" method="POST" data-uni-form>
+          <input type="text" name="website" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0" tabindex="-1" autocomplete="off">          <input type="hidden" name="source" value="strah">
           <input type="hidden" name="magnet" value="magnet-8-before-policy">
 
         <div class="form-row">
