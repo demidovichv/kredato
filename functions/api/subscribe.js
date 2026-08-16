@@ -29,6 +29,11 @@ export async function onRequestPost(context) {
       return json(400, { error: 'email_required' });
     }
 
+    // Honeypot: скрытое поле не должно заполняться
+    if (String(body.website || '').trim()) {
+      return json(200, { status: 'queued', source, magnet });
+    }
+
     // Базовые проверки
     if (email.length > 254 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       return json(400, { error: 'email_invalid' });
