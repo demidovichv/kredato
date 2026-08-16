@@ -41,7 +41,7 @@ jobs:
           git config user.name "kredato-bot"
           git config user.email "bot@kredato.com"
 
-          git add site/index.html site/assets/data/rates.json || true
+          git add site/index.html site/assets/data/rates.json site/assets/data/rates.status.json || true
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
@@ -49,4 +49,5 @@ jobs:
           fi
 
           git commit -m "chore: ставки по вкладам $(date +%Y-%m-%d) (cbr xlsx)"
+          git pull --rebase origin HEAD:master || true
           git push origin HEAD:master
