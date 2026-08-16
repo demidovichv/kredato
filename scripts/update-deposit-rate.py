@@ -156,6 +156,27 @@ def safe_range(rng: tuple[float, float] | None, fallback: tuple[float, float], l
     return fallback
 
 
+def extract_sheet_date(ws) -> 'date | None':
+    try:
+        for row in ws.iter_rows(values_only=True):
+            for cell in row:
+                if isinstance(cell, str):
+                    for fmt in ('%d.%m.%Y', '%Y-%m-%d', '%m/%d/%Y'):
+                        try:
+                            return datetime.strptime(cell.strip(), fmt).date()
+                        except ValueError:
+                            pass
+                if hasattr(cell, 'value') and isinstance(cell.value, str):
+                    for fmt in ('%d.%m.%Y', '%Y-%m-%d', '%m/%d/%Y'):
+                        try:
+                            return datetime.strptime(cell.value.strip(), fmt).date()
+                        except ValueError:
+                            pass
+    except Exception:
+        pass
+    return None
+
+
 def write_status(source: str, stale: bool = False, error: str | None = None):
     payload = {
         "updated_at": datetime.now(timezone.utc).isoformat(),
