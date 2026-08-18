@@ -21,3 +21,8 @@ charly_plan.html
 shared/
 statister_mail/
 _exports/
+
+# GSC API ключ
+infra/rank-tracking/gsc-service-account.json
+# SerpApi API ключ
+infra/rank-tracking/serpapi_config.json
