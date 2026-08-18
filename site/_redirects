@@ -65,3 +65,6 @@
 # /subscribe/confirmed -> /subscribe/confirmed/index.html
 /subscribe.html   /subscribe.html/   308
 /subscribe.html/*   /subscribe.html/:splat   200
+
+# 404 fallback for nonexistent paths
+/*   /404.html   404
